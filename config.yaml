@@ -1,0 +1,9 @@
+nacos:
+  host: 81.70.142.31
+  port: 18018
+  rpcPort: 18017
+  user: nacos
+  pass: nacos123
+  namespace:
+  dataId: tiktok.yaml
+  group: DEFAULT_GROUP

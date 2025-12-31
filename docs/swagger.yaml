@@ -1,0 +1,146 @@
+basePath: /gateway
+definitions:
+  model.User:
+    properties:
+      avatar:
+        type: string
+      background_image:
+        type: string
+      id:
+        type: string
+      nick_name:
+        type: string
+      signature:
+        type: string
+      user_name:
+        type: string
+    type: object
+  res.Response:
+    properties:
+      code:
+        type: integer
+      data: {}
+      msg:
+        type: string
+    type: object
+  v1.LoginReq:
+    properties:
+      password:
+        example: "123456"
+        minLength: 6
+        type: string
+      username:
+        example: admin
+        type: string
+    required:
+    - password
+    - username
+    type: object
+  v1.RegisterReq:
+    properties:
+      password:
+        example: secret123
+        minLength: 6
+        type: string
+      username:
+        example: newuser
+        maxLength: 20
+        minLength: 4
+        type: string
+    required:
+    - password
+    - username
+    type: object
+host: localhost:18888
+info:
+  contact:
+    email: support@swagger.io
+    name: API Support
+    url: http://www.swagger.io/support
+  description: 基于 Gin + Gorm + Wire 的企业级后端服务
+  license:
+    name: Apache 2.0
+    url: http://www.apache.org/licenses/LICENSE-2.0.html
+  termsOfService: https://github.com/Mojitocean/sponge
+  title: Sponge API
+  version: "1.0"
+paths:
+  /gateway/user/v1/login:
+    post:
+      consumes:
+      - application/json
+      description: 通过用户名密码登录并返回 JWT
+      parameters:
+      - description: 登录信息
+        in: body
+        name: data
+        required: true
+        schema:
+          $ref: '#/definitions/v1.LoginReq'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: 成功
+          schema:
+            $ref: '#/definitions/res.Response'
+      summary: 用户登录
+      tags:
+      - 用户模块
+  /gateway/user/v1/profile:
+    get:
+      consumes:
+      - application/json
+      description: 通过 JWT 解析获取用户 ID，从数据库查询最新资料
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: 查询成功
+          schema:
+            allOf:
+            - $ref: '#/definitions/res.Response'
+            - properties:
+                data:
+                  $ref: '#/definitions/model.User'
+              type: object
+        "401":
+          description: 未授权或Token失效
+          schema:
+            $ref: '#/definitions/res.Response'
+      security:
+      - Bearer: []
+      summary: 获取当前登录用户信息
+      tags:
+      - 用户模块
+  /gateway/user/v1/register:
+    post:
+      consumes:
+      - application/json
+      description: 根据用户名和密码创建新用户，ID 使用 UUID V5 自动生成
+      parameters:
+      - description: 注册信息
+        in: body
+        name: data
+        required: true
+        schema:
+          $ref: '#/definitions/v1.RegisterReq'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: 注册成功
+          schema:
+            $ref: '#/definitions/res.Response'
+        "400":
+          description: 参数错误
+          schema:
+            $ref: '#/definitions/res.Response'
+        "500":
+          description: 系统异常
+          schema:
+            $ref: '#/definitions/res.Response'
+      summary: 用户注册接口
+      tags:
+      - 用户模块
+swagger: "2.0"
