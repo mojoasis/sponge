@@ -1,3 +1,5 @@
+system:
+  machineID: 1
 nacos:
   host: 81.70.142.31
   port: 18018

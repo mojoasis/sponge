@@ -10,8 +10,8 @@ definitions:
         example: admin
         type: string
     required:
-    - password
-    - username
+      - password
+      - username
     type: object
   dto.RegisterReq:
     properties:
@@ -31,10 +31,10 @@ definitions:
         minLength: 4
         type: string
     required:
-    - password
-    - username
+      - password
+      - username
     type: object
-  model.User:
+  dto.UserInfoRes:
     properties:
       avatar:
         type: string
@@ -53,7 +53,7 @@ definitions:
     properties:
       code:
         type: integer
-      data: {}
+      data: { }
       msg:
         type: string
     type: object
@@ -74,17 +74,17 @@ paths:
   /gateway/user/v1/login:
     post:
       consumes:
-      - application/json
+        - application/json
       description: 通过用户名密码登录并返回 JWT
       parameters:
-      - description: 登录信息
-        in: body
-        name: data
-        required: true
-        schema:
-          $ref: '#/definitions/dto.LoginReq'
+        - description: 登录信息
+          in: body
+          name: data
+          required: true
+          schema:
+            $ref: '#/definitions/dto.LoginReq'
       produces:
-      - application/json
+        - application/json
       responses:
         "200":
           description: 成功
@@ -92,47 +92,47 @@ paths:
             $ref: '#/definitions/res.Response'
       summary: 用户登录
       tags:
-      - 用户模块
+        - 用户模块
   /gateway/user/v1/profile:
     get:
       consumes:
-      - application/json
+        - application/json
       description: 通过 JWT 解析获取用户 ID，从数据库查询最新资料
       produces:
-      - application/json
+        - application/json
       responses:
         "200":
           description: 查询成功
           schema:
             allOf:
-            - $ref: '#/definitions/res.Response'
-            - properties:
-                data:
-                  $ref: '#/definitions/model.User'
-              type: object
+              - $ref: '#/definitions/res.Response'
+              - properties:
+                  data:
+                    $ref: '#/definitions/dto.UserInfoRes'
+                type: object
         "401":
           description: 未授权或Token失效
           schema:
             $ref: '#/definitions/res.Response'
       security:
-      - Bearer: []
+        - Bearer: [ ]
       summary: 获取当前登录用户信息
       tags:
-      - 用户模块
+        - 用户模块
   /gateway/user/v1/register:
     post:
       consumes:
-      - application/json
+        - application/json
       description: 根据用户名和密码创建新用户，ID 使用 UUID V5 自动生成
       parameters:
-      - description: 注册信息
-        in: body
-        name: data
-        required: true
-        schema:
-          $ref: '#/definitions/dto.RegisterReq'
+        - description: 注册信息
+          in: body
+          name: data
+          required: true
+          schema:
+            $ref: '#/definitions/dto.RegisterReq'
       produces:
-      - application/json
+        - application/json
       responses:
         "200":
           description: 注册成功
@@ -148,5 +148,5 @@ paths:
             $ref: '#/definitions/res.Response'
       summary: 用户注册接口
       tags:
-      - 用户模块
+        - 用户模块
 swagger: "2.0"

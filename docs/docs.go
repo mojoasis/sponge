@@ -88,7 +88,7 @@ const docTemplate = `{
                                     "type": "object",
                                     "properties": {
                                         "data": {
-                                            "$ref": "#/definitions/model.User"
+                                            "$ref": "#/definitions/dto.UserInfoRes"
                                         }
                                     }
                                 }
@@ -198,7 +198,7 @@ const docTemplate = `{
                 }
             }
         },
-        "model.User": {
+        "dto.UserInfoRes": {
             "type": "object",
             "properties": {
                 "avatar": {

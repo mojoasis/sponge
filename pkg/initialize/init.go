@@ -49,6 +49,13 @@ func InitConfig() {
 	if err := v.ReadInConfig(); err != nil {
 		panic(fmt.Sprintf("读取本地配置失败: %s", err))
 	}
+
+	// 初始化雪花算法
+	machineID := v.GetInt64("system.machineID")
+	if err := utils.InitSnowflake(machineID); err != nil {
+		global.Logger.Fatal("初始化雪花算法失败", zap.Error(err))
+	}
+
 	// 初始化 Nacos 客户端
 	serverConfigs := []constant.ServerConfig{
 		{

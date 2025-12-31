@@ -17,7 +17,7 @@ wire:
 ## swag: 重新生成 Swagger 文档
 swag:
 	@echo "==> Generating swagger docs..."
-	@swag init -g $(MAIN_FILE) --parseDependency --parseInternal
+	@swag init -g $(MAIN_FILE)
 
 ## build: 编译项目
 build:

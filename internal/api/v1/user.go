@@ -1,6 +1,7 @@
 package v1
 
 import (
+	"fmt"
 	"sponge/internal/model/dto"
 	"sponge/internal/service"
 	"sponge/pkg/global"
@@ -38,7 +39,6 @@ func (a *UserApi) Register(c *gin.Context) {
 	if err := c.ShouldBindJSON(&req); err != nil {
 		// 调用翻译器
 		errMsg := utils.Translate(err)
-		// 记录带翻译信息的日志，方便后端排查
 		global.Logger.Warn("参数校验失败", zap.String("reason", errMsg))
 		// 使用统一响应返回翻译后的中文错误
 		res.FailMsg(errMsg, c)
@@ -46,12 +46,12 @@ func (a *UserApi) Register(c *gin.Context) {
 	}
 
 	// 2. 调用业务逻辑
-	if err := a.userService.Register(req.UserName, req.Password); err != nil {
+	if err := a.userService.Register(c.Request.Context(), req.UserName, req.Password); err != nil {
 		res.FailMsg(err.Error(), c)
 		return
 	}
 
-	// 3. 成功返回
+	// 成功返回
 	res.Ok(c)
 }
 
@@ -77,12 +77,32 @@ func (a *UserApi) Login(c *gin.Context) {
 	}
 
 	// 登录
-	token, user, err := a.userService.Login(c, req.UserName, req.Password)
+	token, userID, _, err := a.userService.Login(c.Request.Context(), req.UserName, req.Password)
 	if err != nil {
 		res.FailMsg(err.Error(), c)
 		return
 	}
-	res.OkData(gin.H{"token": token, "user": user}, c)
+
+	// 查询用户完整信息
+	user, err := a.userService.GetUserProfile(c.Request.Context(), userID)
+	if err != nil {
+		res.FailMsg("获取用户信息失败", c)
+		return
+	}
+
+	// 使用转换工具将 model 转换为 DTO
+	var userInfo dto.UserInfoRes
+	if err := utils.ToDTO(user, &userInfo); err != nil {
+		res.FailMsg("数据转换失败", c)
+		return
+	}
+
+	resp := dto.LoginResp{
+		Token: token,
+		User:  &userInfo,
+	}
+
+	res.OkData(resp, c)
 }
 
 // UserProfile 获取个人资料
@@ -92,12 +112,37 @@ func (a *UserApi) Login(c *gin.Context) {
 // @Security     Bearer
 // @Accept       json
 // @Produce      json
-// @Success      200   {object}  res.Response{data=model.User} "查询成功"
+// @Success      200   {object}  res.Response{data=dto.UserInfoRes} "查询成功"
 // @Failure      401   {object}  res.Response "未授权或Token失效"
 // @Router       /gateway/user/v1/profile [get]
 func (a *UserApi) UserProfile(c *gin.Context) {
 	// 从上下文中获取中间件解析出的 UserID
-	userID, _ := c.Get("userID")
-	// 简单演示，实际应该去 DB 查最新信息
-	res.OkData(gin.H{"user_id": userID, "status": "authenticated"}, c)
+	userID, exists := c.Get("userID")
+	fmt.Print("userID:", userID)
+	if !exists {
+		res.FailMsg("未授权", c)
+		return
+	}
+
+	userIDStr, ok := userID.(string)
+	if !ok {
+		res.FailMsg("用户ID格式错误", c)
+		return
+	}
+
+	// 查询用户信息
+	user, err := a.userService.GetUserProfile(c.Request.Context(), userIDStr)
+	if err != nil {
+		res.FailMsg("获取用户信息失败", c)
+		return
+	}
+
+	// 使用转换工具将 model 转换为 DTO
+	var userInfo dto.UserInfoRes
+	if err := utils.ToDTO(user, &userInfo); err != nil {
+		res.FailMsg("数据转换失败", c)
+		return
+	}
+
+	res.OkData(userInfo, c)
 }

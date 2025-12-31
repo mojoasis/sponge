@@ -13,47 +13,69 @@ type RedisClient struct {
 	Client *redis.Client
 }
 
-// SetObject 自动将对象序列化为 JSON 存入 Redis
+// Set 存入原始值 如果 value 是 string, int, bool 等基础类型，go-redis 会直接处理
+func (r *RedisClient) Set(ctx context.Context, key string, value interface{}, expiration time.Duration) error {
+	return r.Client.Set(ctx, key, value, expiration).Err()
+}
+
+// Get 获取原始字符串
+func (r *RedisClient) Get(ctx context.Context, key string) (string, error) {
+	return r.Client.Get(ctx, key).Result()
+}
+
+// SetObject 自动处理 JSON 序列化
 func (r *RedisClient) SetObject(ctx context.Context, key string, value interface{}, expiration time.Duration) error {
-	// 使用 sonic 序列化
-	data, err := sonic.Marshal(value)
-	if err != nil {
-		return err
+	var data interface{}
+
+	switch v := value.(type) {
+	case string, []byte, int, int64, float64, bool:
+		data = v
+	default:
+		// 只有复杂结构体才走 JSON 序列化
+		b, err := sonic.Marshal(value)
+		if err != nil {
+			return err
+		}
+		data = b
 	}
 	return r.Client.Set(ctx, key, data, expiration).Err()
 }
 
-// GetObject 自动将 Redis 中的 JSON 反序列化到指定对象
+// GetObject 增强版：泛型支持，直接返回目标类型
 func (r *RedisClient) GetObject(ctx context.Context, key string, obj interface{}) error {
 	data, err := r.Client.Get(ctx, key).Bytes()
 	if err != nil {
 		return err
 	}
-	// 使用 sonic 反序列化
 	return sonic.Unmarshal(data, obj)
 }
 
-// GetWithCache 通用缓存逻辑：先查缓存，没有则查 DB 并回写
-func (r *RedisClient) GetWithCache(ctx context.Context, key string, obj interface{}, expiration time.Duration, dbQuery func() (interface{}, error)) error {
-	err := r.GetObject(ctx, key, obj)
+// GetCache 泛型，T 代表你要获取的数据类型，例如 *model.User
+func GetCache[T any](ctx context.Context, r *RedisClient, key string, expiration time.Duration, dbQuery func() (T, error)) (T, error) {
+	var obj T
+
+	// 1. 尝试从缓存获取
+	err := r.GetObject(ctx, key, &obj)
 	if err == nil {
-		return nil // 命中缓存
+		return obj, nil // 命中缓存
 	}
 
+	// 2. 缓存未命中（处理 redis.Nil）
 	if errors.Is(err, redis.Nil) {
-		// 缓存未命中，执行 DB 查询
+		// 3. 执行 DB 查询
 		res, dbErr := dbQuery()
 		if dbErr != nil {
-			return dbErr
+			return obj, dbErr
 		}
-		// 回写缓存
-		_ = r.SetObject(ctx, key, res, expiration)
 
-		// 将结果赋值给 obj (这部分通常需要反射或在 dbQuery 中处理)
-		// 简单处理：重新 Marshal/Unmarshal 一次以填充指针
-		b, _ := sonic.Marshal(res)
-		return sonic.Unmarshal(b, obj)
+		// 4. 异步回写缓存（不阻塞主流程，提升响应速度）
+		// 注意：如果对一致性要求极高，请改为同步
+		go func() {
+			_ = r.SetObject(context.Background(), key, res, expiration)
+		}()
+
+		return res, nil
 	}
 
-	return err
+	return obj, err
 }
