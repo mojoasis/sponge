@@ -39,7 +39,7 @@ COPY --from=builder /build/config.yaml .
 # 如果有 docs 或者静态资源也需要拷贝
 COPY --from=builder /build/docs ./docs
 
-# 暴露端口 (对应你的 server.port)
+# 暴露端口 (对应你的 routes.port)
 EXPOSE 8080
 
 # 启动程序

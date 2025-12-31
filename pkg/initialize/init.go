@@ -16,6 +16,8 @@ import (
 	"github.com/nacos-group/nacos-sdk-go/v2/common/constant"
 	"github.com/nacos-group/nacos-sdk-go/v2/vo"
 	"github.com/spf13/viper"
+	"go.uber.org/zap"
+	"go.uber.org/zap/zapcore"
 	"gorm.io/gorm/logger"
 	"gorm.io/gorm/schema"
 
@@ -33,6 +35,9 @@ var NamingClient naming_client.INamingClient
 
 // InitConfig 启动总入口
 func InitConfig() {
+	// 1. 最先初始化日志，确保后续报错都能被记录
+	global.Logger = initLogger()
+
 	// 读取本地 config.yaml 获取 Nacos 连接信息
 	v := viper.New()
 	v.SetConfigFile("config.yaml")
@@ -133,6 +138,7 @@ func refreshConfig(client config_client.IConfigClient, dataID, group string) {
 	initDatabase(&newConf)
 	initRedis(&newConf)
 	initOSS(&newConf)
+
 	// initPay(&newConf) ... 同理
 }
 
@@ -231,4 +237,19 @@ func initOSS(cfg *conf.AppConfig) {
 		Bucket:   cfg.OSS.ImgBucket,
 	}
 	fmt.Println("OSS 初始化成功")
+}
+
+// initLogger 初始化日志
+func initLogger() *zap.Logger {
+	// 生产环境
+	//logger, _ := zap.NewProduction()
+	//config := zap.NewDevelopmentConfig()
+	// 开发环境
+	logger, _ := zap.NewDevelopment()
+	config := zap.NewDevelopmentConfig()
+	// 加上这个，日志里会显示调用者的文件名和行号
+	config.EncoderConfig.EncodeLevel = zapcore.CapitalColorLevelEncoder
+	// 替换全局的 zap.L()
+	zap.ReplaceGlobals(logger)
+	return logger
 }
