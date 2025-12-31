@@ -1,10 +1,14 @@
 package v1
 
 import (
+	"sponge/internal/model/dto"
 	"sponge/internal/service"
+	"sponge/pkg/global"
 	"sponge/pkg/res" // 假设你的 res 包路径在这里
+	"sponge/pkg/utils"
 
 	"github.com/gin-gonic/gin"
+	"go.uber.org/zap"
 )
 
 type UserApi struct {
@@ -22,21 +26,32 @@ func NewUserApi(svc *service.UserService) *UserApi {
 // @Tags         用户模块
 // @Accept       json
 // @Produce      json
-// @Param        data  body      RegisterReq  true  "注册信息"
+// @Param        data  body      dto.RegisterReq  true  "注册信息"
 // @Success      200   {object}  res.Response "注册成功"
 // @Failure      400   {object}  res.Response "参数错误"
 // @Failure      500   {object}  res.Response "系统异常"
 // @Router       /gateway/user/v1/register [post]
 func (a *UserApi) Register(c *gin.Context) {
-	var req RegisterReq
+	var req dto.RegisterReq
+
+	// 1. 绑定并校验参数
 	if err := c.ShouldBindJSON(&req); err != nil {
-		res.FailMsg("参数错误", c)
+		// 调用翻译器
+		errMsg := utils.Translate(err)
+		// 记录带翻译信息的日志，方便后端排查
+		global.Logger.Warn("参数校验失败", zap.String("reason", errMsg))
+		// 使用统一响应返回翻译后的中文错误
+		res.FailMsg(errMsg, c)
 		return
 	}
+
+	// 2. 调用业务逻辑
 	if err := a.userService.Register(req.UserName, req.Password); err != nil {
 		res.FailMsg(err.Error(), c)
 		return
 	}
+
+	// 3. 成功返回
 	res.Ok(c)
 }
 
@@ -46,14 +61,18 @@ func (a *UserApi) Register(c *gin.Context) {
 // @Tags         用户模块
 // @Accept       json
 // @Produce      json
-// @Param        data  body      LoginReq  true  "登录信息"
+// @Param        data  body      dto.LoginReq  true  "登录信息"
 // @Success      200   {object}  res.Response "成功"
 // @Router       /gateway/user/v1/login [post]
 func (a *UserApi) Login(c *gin.Context) {
-	var req LoginReq
-
+	var req dto.LoginReq
 	if err := c.ShouldBindJSON(&req); err != nil {
-		res.FailMsg("参数错误", c)
+		// 调用翻译器
+		errMsg := utils.Translate(err)
+		// 记录带翻译信息的日志，方便后端排查
+		global.Logger.Warn("参数错误", zap.String("reason", errMsg))
+		// 使用统一响应返回翻译后的中文错误
+		res.FailMsg(errMsg, c)
 		return
 	}
 

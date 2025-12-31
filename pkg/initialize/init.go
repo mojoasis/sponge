@@ -35,8 +35,13 @@ var NamingClient naming_client.INamingClient
 
 // InitConfig 启动总入口
 func InitConfig() {
-	// 1. 最先初始化日志，确保后续报错都能被记录
+	// 最先初始化日志，确保后续报错都能被记录
 	global.Logger = initLogger()
+
+	// 初始化验证翻译器
+	if err := utils.InitTrans(); err != nil {
+		global.Logger.Error("初始化翻译器失败", zap.Error(err))
+	}
 
 	// 读取本地 config.yaml 获取 Nacos 连接信息
 	v := viper.New()

@@ -44,7 +44,7 @@ const docTemplate = `{
                         "in": "body",
                         "required": true,
                         "schema": {
-                            "$ref": "#/definitions/v1.LoginReq"
+                            "$ref": "#/definitions/dto.LoginReq"
                         }
                     }
                 ],
@@ -124,7 +124,7 @@ const docTemplate = `{
                         "in": "body",
                         "required": true,
                         "schema": {
-                            "$ref": "#/definitions/v1.RegisterReq"
+                            "$ref": "#/definitions/dto.RegisterReq"
                         }
                     }
                 ],
@@ -152,6 +152,52 @@ const docTemplate = `{
         }
     },
     "definitions": {
+        "dto.LoginReq": {
+            "type": "object",
+            "required": [
+                "password",
+                "username"
+            ],
+            "properties": {
+                "password": {
+                    "type": "string",
+                    "minLength": 6,
+                    "example": "123456"
+                },
+                "username": {
+                    "type": "string",
+                    "example": "admin"
+                }
+            }
+        },
+        "dto.RegisterReq": {
+            "type": "object",
+            "required": [
+                "password",
+                "username"
+            ],
+            "properties": {
+                "avatar": {
+                    "type": "string"
+                },
+                "email": {
+                    "description": "可选字段：使用指针。如果不传，后端收到的是 nil",
+                    "type": "string",
+                    "example": "test@example.com"
+                },
+                "password": {
+                    "type": "string",
+                    "minLength": 6,
+                    "example": "secret123"
+                },
+                "username": {
+                    "type": "string",
+                    "maxLength": 20,
+                    "minLength": 4,
+                    "example": "newuser"
+                }
+            }
+        },
         "model.User": {
             "type": "object",
             "properties": {
@@ -184,44 +230,6 @@ const docTemplate = `{
                 "data": {},
                 "msg": {
                     "type": "string"
-                }
-            }
-        },
-        "v1.LoginReq": {
-            "type": "object",
-            "required": [
-                "password",
-                "username"
-            ],
-            "properties": {
-                "password": {
-                    "type": "string",
-                    "minLength": 6,
-                    "example": "123456"
-                },
-                "username": {
-                    "type": "string",
-                    "example": "admin"
-                }
-            }
-        },
-        "v1.RegisterReq": {
-            "type": "object",
-            "required": [
-                "password",
-                "username"
-            ],
-            "properties": {
-                "password": {
-                    "type": "string",
-                    "minLength": 6,
-                    "example": "secret123"
-                },
-                "username": {
-                    "type": "string",
-                    "maxLength": 20,
-                    "minLength": 4,
-                    "example": "newuser"
                 }
             }
         }
