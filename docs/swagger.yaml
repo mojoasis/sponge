@@ -1,5 +1,123 @@
 basePath: /gateway
 definitions:
+  dto.ChatSessionRes:
+    properties:
+      id:
+        example: "0"
+        type: string
+      last_message:
+        type: string
+      peer_id:
+        example: "0"
+        type: string
+      peer_user:
+        allOf:
+          - $ref: '#/definitions/dto.UserInfoRes'
+        description: 对方用户信息
+      unread_count:
+        type: integer
+      updated_at:
+        type: string
+    type: object
+  dto.CommentActionReq:
+    properties:
+      action:
+        description: 1-发布评论, 2-删除评论
+        enum:
+          - 1
+          - 2
+        type: integer
+      comment_id:
+        description: 删除时必填
+        example: "0"
+        type: string
+      content:
+        description: 发布时必填
+        type: string
+      parent_id:
+        description: 被回复的评论ID（回复时使用）
+        example: "0"
+        type: string
+      root_id:
+        description: 顶层评论ID（回复时使用）
+        example: "0"
+        type: string
+      video_id:
+        example: "0"
+        type: string
+    required:
+      - action
+      - video_id
+    type: object
+  dto.CommentInfoRes:
+    properties:
+      author:
+        allOf:
+          - $ref: '#/definitions/dto.UserInfoRes'
+        description: 评论作者信息
+      content:
+        type: string
+      created_at:
+        type: string
+      id:
+        example: "0"
+        type: string
+      is_liked:
+        description: 当前用户是否点赞该评论
+        type: boolean
+      like_count:
+        type: integer
+      parent_id:
+        example: "0"
+        type: string
+      replies:
+        description: 回复列表（仅顶层评论有）
+        items:
+          $ref: '#/definitions/dto.CommentInfoRes'
+        type: array
+      reply_count:
+        description: 回复数量（仅顶层评论有）
+        type: integer
+      root_id:
+        example: "0"
+        type: string
+      user_id:
+        example: "0"
+        type: string
+      video_id:
+        example: "0"
+        type: string
+    type: object
+  dto.FollowActionReq:
+    properties:
+      action:
+        description: 1-关注, 2-取消关注
+        enum:
+          - 1
+          - 2
+        type: integer
+      to_user_id:
+        example: "0"
+        type: string
+    required:
+      - action
+      - to_user_id
+    type: object
+  dto.LikeActionReq:
+    properties:
+      action:
+        description: 1-点赞, 2-取消点赞
+        enum:
+          - 1
+          - 2
+        type: integer
+      video_id:
+        example: "0"
+        type: string
+    required:
+      - action
+      - video_id
+    type: object
   dto.LoginReq:
     properties:
       password:
@@ -13,17 +131,71 @@ definitions:
       - password
       - username
     type: object
+  dto.MessageInfoRes:
+    properties:
+      content:
+        type: string
+      created_at:
+        type: string
+      from_id:
+        example: "0"
+        type: string
+      id:
+        example: "0"
+        type: string
+      is_read:
+        type: integer
+      msg_type:
+        type: integer
+      to_id:
+        example: "0"
+        type: string
+    type: object
+  dto.PublishVideoReq:
+    properties:
+      cover_url:
+        type: string
+      description:
+        maxLength: 1000
+        type: string
+      duration:
+        minimum: 0
+        type: number
+      height:
+        minimum: 0
+        type: integer
+      play_url:
+        type: string
+      title:
+        maxLength: 255
+        type: string
+      width:
+        minimum: 0
+        type: integer
+    required:
+      - cover_url
+      - play_url
+      - title
+    type: object
+  dto.PublishVideoResp:
+    properties:
+      video_id:
+        example: "0"
+        type: string
+    type: object
   dto.RegisterReq:
     properties:
-      avatar:
-        type: string
       email:
-        description: 可选字段：使用指针。如果不传，后端收到的是 nil
+        description: Email 注册时可选，但如果传了必须符合格式
         example: test@example.com
         type: string
       password:
         example: secret123
+        maxLength: 32
         minLength: 6
+        type: string
+      phone:
+        example: "18888888888"
         type: string
       username:
         example: newuser
@@ -32,22 +204,151 @@ definitions:
         type: string
     required:
       - password
+      - phone
       - username
+    type: object
+  dto.SendMessageReq:
+    properties:
+      content:
+        type: string
+      msg_type:
+        description: 1-文本, 2-图片
+        enum:
+          - 1
+          - 2
+        type: integer
+      to_user_id:
+        example: "0"
+        type: string
+    required:
+      - content
+      - to_user_id
+    type: object
+  dto.UpdatePasswordReq:
+    properties:
+      newPassword:
+        description: nefield 确保新旧密码不等
+        maxLength: 32
+        minLength: 6
+        type: string
+      oldPassword:
+        type: string
+    required:
+      - newPassword
+      - oldPassword
+    type: object
+  dto.UpdatePhoneReq:
+    properties:
+      code:
+        description: 增加验证码字段，实际业务必需
+        type: string
+      newPhone:
+        type: string
+    required:
+      - code
+      - newPhone
+    type: object
+  dto.UpdateUserProfileReq:
+    properties:
+      avatar:
+        type: string
+      backgroundImage:
+        type: string
+      email:
+        type: string
+      nickName:
+        maxLength: 50
+        type: string
+      signature:
+        maxLength: 255
+        type: string
     type: object
   dto.UserInfoRes:
     properties:
       avatar:
         type: string
-      background_image:
+      backgroundImage:
+        type: string
+      email:
         type: string
       id:
+        example: "0"
         type: string
-      nick_name:
+      nickName:
+        type: string
+      phone:
         type: string
       signature:
         type: string
-      user_name:
+      userName:
         type: string
+    type: object
+  dto.UserRelationRes:
+    properties:
+      avatar:
+        type: string
+      backgroundImage:
+        type: string
+      email:
+        type: string
+      id:
+        example: "0"
+        type: string
+      is_follow:
+        description: 当前用户是否关注该用户
+        type: boolean
+      is_followed:
+        description: 该用户是否关注当前用户
+        type: boolean
+      is_mutual_follow:
+        description: 是否互关
+        type: boolean
+      nickName:
+        type: string
+      phone:
+        type: string
+      signature:
+        type: string
+      userName:
+        type: string
+    type: object
+  dto.VideoInfoRes:
+    properties:
+      author:
+        allOf:
+          - $ref: '#/definitions/dto.UserInfoRes'
+        description: 作者信息
+      comment_count:
+        type: integer
+      cover_url:
+        type: string
+      description:
+        type: string
+      duration:
+        type: number
+      favorite_count:
+        type: integer
+      height:
+        type: integer
+      id:
+        example: "0"
+        type: string
+      is_favorite:
+        description: 当前用户是否点赞
+        type: boolean
+      play_url:
+        type: string
+      publish_time:
+        type: string
+      title:
+        type: string
+      user_id:
+        example: "0"
+        type: string
+      view_count:
+        type: integer
+      width:
+        type: integer
     type: object
   res.Response:
     properties:
@@ -71,11 +372,384 @@ info:
   title: Sponge API
   version: "1.0"
 paths:
+  /gateway/chat/message:
+    post:
+      consumes:
+        - application/json
+      description: 发送聊天消息
+      parameters:
+        - description: 消息信息
+          in: body
+          name: data
+          required: true
+          schema:
+            $ref: '#/definitions/dto.SendMessageReq'
+      produces:
+        - application/json
+      responses:
+        "200":
+          description: 发送成功
+          schema:
+            allOf:
+              - $ref: '#/definitions/res.Response'
+              - properties:
+                  data:
+                    $ref: '#/definitions/dto.MessageInfoRes'
+                type: object
+      security:
+        - Bearer: [ ]
+      summary: 发送消息
+      tags:
+        - 聊天模块
+  /gateway/chat/message/list:
+    get:
+      consumes:
+        - application/json
+      description: 获取与指定用户的消息列表
+      parameters:
+        - description: 对方用户ID
+          format: int64
+          in: query
+          name: to_user_id
+          required: true
+          type: integer
+        - default: 1
+          description: 页码
+          in: query
+          name: page
+          type: integer
+        - default: 20
+          description: 每页数量
+          in: query
+          name: size
+          type: integer
+      produces:
+        - application/json
+      responses:
+        "200":
+          description: 查询成功
+          schema:
+            allOf:
+              - $ref: '#/definitions/res.Response'
+              - properties:
+                  data:
+                    items:
+                      $ref: '#/definitions/dto.MessageInfoRes'
+                    type: array
+                type: object
+      security:
+        - Bearer: [ ]
+      summary: 获取消息列表
+      tags:
+        - 聊天模块
+  /gateway/chat/session/list:
+    get:
+      consumes:
+        - application/json
+      description: 获取用户的聊天会话列表
+      parameters:
+        - default: 1
+          description: 页码
+          in: query
+          name: page
+          type: integer
+        - default: 20
+          description: 每页数量
+          in: query
+          name: size
+          type: integer
+      produces:
+        - application/json
+      responses:
+        "200":
+          description: 查询成功
+          schema:
+            allOf:
+              - $ref: '#/definitions/res.Response'
+              - properties:
+                  data:
+                    items:
+                      $ref: '#/definitions/dto.ChatSessionRes'
+                    type: array
+                type: object
+      security:
+        - Bearer: [ ]
+      summary: 获取会话列表
+      tags:
+        - 聊天模块
+  /gateway/comment/action:
+    post:
+      consumes:
+        - application/json
+      description: 发布或删除评论
+      parameters:
+        - description: 评论信息
+          in: body
+          name: data
+          required: true
+          schema:
+            $ref: '#/definitions/dto.CommentActionReq'
+      produces:
+        - application/json
+      responses:
+        "200":
+          description: 操作成功
+          schema:
+            allOf:
+              - $ref: '#/definitions/res.Response'
+              - properties:
+                  data:
+                    $ref: '#/definitions/dto.CommentInfoRes'
+                type: object
+      security:
+        - Bearer: [ ]
+      summary: 评论操作
+      tags:
+        - 评论模块
+  /gateway/comment/list:
+    get:
+      consumes:
+        - application/json
+      description: 获取视频的评论列表
+      parameters:
+        - description: 视频ID
+          format: int64
+          in: query
+          name: video_id
+          required: true
+          type: integer
+        - default: 1
+          description: 页码
+          in: query
+          name: page
+          type: integer
+        - default: 20
+          description: 每页数量
+          in: query
+          name: size
+          type: integer
+      produces:
+        - application/json
+      responses:
+        "200":
+          description: 查询成功
+          schema:
+            allOf:
+              - $ref: '#/definitions/res.Response'
+              - properties:
+                  data:
+                    items:
+                      $ref: '#/definitions/dto.CommentInfoRes'
+                    type: array
+                type: object
+      summary: 获取评论列表
+      tags:
+        - 评论模块
+  /gateway/follow/action:
+    post:
+      consumes:
+        - application/json
+      description: 关注或取消关注用户
+      parameters:
+        - description: 关注信息
+          in: body
+          name: data
+          required: true
+          schema:
+            $ref: '#/definitions/dto.FollowActionReq'
+      produces:
+        - application/json
+      responses:
+        "200":
+          description: 操作成功
+          schema:
+            $ref: '#/definitions/res.Response'
+      security:
+        - Bearer: [ ]
+      summary: 关注/取消关注操作
+      tags:
+        - 关注模块
+  /gateway/follow/list:
+    get:
+      consumes:
+        - application/json
+      description: 获取用户的关注列表
+      parameters:
+        - description: 用户ID
+          format: int64
+          in: query
+          name: user_id
+          required: true
+          type: integer
+        - default: 1
+          description: 页码
+          in: query
+          name: page
+          type: integer
+        - default: 30
+          description: 每页数量
+          in: query
+          name: size
+          type: integer
+      produces:
+        - application/json
+      responses:
+        "200":
+          description: 查询成功
+          schema:
+            allOf:
+              - $ref: '#/definitions/res.Response'
+              - properties:
+                  data:
+                    items:
+                      $ref: '#/definitions/dto.UserRelationRes'
+                    type: array
+                type: object
+      summary: 获取关注列表
+      tags:
+        - 关注模块
+  /gateway/follower/list:
+    get:
+      consumes:
+        - application/json
+      description: 获取用户的粉丝列表
+      parameters:
+        - description: 用户ID
+          format: int64
+          in: query
+          name: user_id
+          required: true
+          type: integer
+        - default: 1
+          description: 页码
+          in: query
+          name: page
+          type: integer
+        - default: 30
+          description: 每页数量
+          in: query
+          name: size
+          type: integer
+      produces:
+        - application/json
+      responses:
+        "200":
+          description: 查询成功
+          schema:
+            allOf:
+              - $ref: '#/definitions/res.Response'
+              - properties:
+                  data:
+                    items:
+                      $ref: '#/definitions/dto.UserRelationRes'
+                    type: array
+                type: object
+      summary: 获取粉丝列表
+      tags:
+        - 关注模块
+  /gateway/friend/list:
+    get:
+      consumes:
+        - application/json
+      description: 获取互相关注的好友列表
+      parameters:
+        - default: 1
+          description: 页码
+          in: query
+          name: page
+          type: integer
+        - default: 30
+          description: 每页数量
+          in: query
+          name: size
+          type: integer
+      produces:
+        - application/json
+      responses:
+        "200":
+          description: 查询成功
+          schema:
+            allOf:
+              - $ref: '#/definitions/res.Response'
+              - properties:
+                  data:
+                    items:
+                      $ref: '#/definitions/dto.UserRelationRes'
+                    type: array
+                type: object
+      security:
+        - Bearer: [ ]
+      summary: 获取好友列表
+      tags:
+        - 关注模块
+  /gateway/like/action:
+    post:
+      consumes:
+        - application/json
+      description: 点赞或取消点赞视频
+      parameters:
+        - description: 点赞信息
+          in: body
+          name: data
+          required: true
+          schema:
+            $ref: '#/definitions/dto.LikeActionReq'
+      produces:
+        - application/json
+      responses:
+        "200":
+          description: 操作成功
+          schema:
+            $ref: '#/definitions/res.Response'
+      security:
+        - Bearer: [ ]
+      summary: 点赞/取消点赞操作
+      tags:
+        - 点赞模块
+  /gateway/like/list:
+    get:
+      consumes:
+        - application/json
+      description: 获取用户点赞的视频列表
+      parameters:
+        - description: 用户ID
+          format: int64
+          in: query
+          name: user_id
+          required: true
+          type: integer
+        - default: 1
+          description: 页码
+          in: query
+          name: page
+          type: integer
+        - default: 30
+          description: 每页数量
+          in: query
+          name: size
+          type: integer
+      produces:
+        - application/json
+      responses:
+        "200":
+          description: 查询成功
+          schema:
+            allOf:
+              - $ref: '#/definitions/res.Response'
+              - properties:
+                  data:
+                    items:
+                      $ref: '#/definitions/dto.VideoInfoRes'
+                    type: array
+                type: object
+      summary: 获取点赞列表
+      tags:
+        - 点赞模块
   /gateway/user/v1/login:
     post:
       consumes:
         - application/json
-      description: 通过用户名密码登录并返回 JWT
+      description: 通过用户名密码登录并返回JWT
       parameters:
         - description: 登录信息
           in: body
@@ -97,7 +771,7 @@ paths:
     get:
       consumes:
         - application/json
-      description: 通过 JWT 解析获取用户 ID，从数据库查询最新资料
+      description: 获取个人信息
       produces:
         - application/json
       responses:
@@ -116,14 +790,14 @@ paths:
             $ref: '#/definitions/res.Response'
       security:
         - Bearer: [ ]
-      summary: 获取当前登录用户信息
+      summary: 获取个人信息
       tags:
         - 用户模块
   /gateway/user/v1/register:
     post:
       consumes:
         - application/json
-      description: 根据用户名和密码创建新用户，ID 使用 UUID V5 自动生成
+      description: 根据用户名和密码创建新用户
       parameters:
         - description: 注册信息
           in: body
@@ -146,7 +820,189 @@ paths:
           description: 系统异常
           schema:
             $ref: '#/definitions/res.Response'
-      summary: 用户注册接口
+      summary: 用户注册
       tags:
         - 用户模块
+  /gateway/user/v1/update/password:
+    post:
+      consumes:
+        - application/json
+      description: 修改密码
+      parameters:
+        - description: 修改密码信息
+          in: body
+          name: data
+          required: true
+          schema:
+            $ref: '#/definitions/dto.UpdatePasswordReq'
+      produces:
+        - application/json
+      responses:
+        "200":
+          description: 修改成功
+          schema:
+            $ref: '#/definitions/res.Response'
+      security:
+        - Bearer: [ ]
+      summary: 修改密码
+      tags:
+        - 用户模块
+  /gateway/user/v1/update/phone:
+    post:
+      consumes:
+        - application/json
+      description: 修改手机号
+      parameters:
+        - description: 修改手机号信息
+          in: body
+          name: data
+          required: true
+          schema:
+            $ref: '#/definitions/dto.UpdatePhoneReq'
+      produces:
+        - application/json
+      responses:
+        "200":
+          description: 修改成功
+          schema:
+            $ref: '#/definitions/res.Response'
+      security:
+        - Bearer: [ ]
+      summary: 修改手机号
+      tags:
+        - 用户模块
+  /gateway/user/v1/update/profile:
+    post:
+      consumes:
+        - application/json
+      description: 修改：昵称、头像、签名、背景图片、邮箱
+      parameters:
+        - description: 修改成功
+          in: body
+          name: data
+          required: true
+          schema:
+            $ref: '#/definitions/dto.UpdateUserProfileReq'
+      produces:
+        - application/json
+      responses:
+        "200":
+          description: 修改成功
+          schema:
+            $ref: '#/definitions/res.Response'
+      security:
+        - Bearer: [ ]
+      summary: 修改个人信息
+      tags:
+        - 用户模块
+  /gateway/video/feed:
+    get:
+      consumes:
+        - application/json
+      description: 获取推荐视频流
+      parameters:
+        - description: 最新时间戳（分页）
+          format: int64
+          in: query
+          name: latest_time
+          type: integer
+        - default: 1
+          description: 页码
+          in: query
+          name: page
+          type: integer
+        - default: 30
+          description: 每页数量
+          in: query
+          name: size
+          type: integer
+      produces:
+        - application/json
+      responses:
+        "200":
+          description: 查询成功
+          schema:
+            allOf:
+              - $ref: '#/definitions/res.Response'
+              - properties:
+                  data:
+                    items:
+                      $ref: '#/definitions/dto.VideoInfoRes'
+                    type: array
+                type: object
+      summary: 获取视频流
+      tags:
+        - 视频模块
+  /gateway/video/list:
+    get:
+      consumes:
+        - application/json
+      description: 获取指定用户的视频列表
+      parameters:
+        - description: 用户ID
+          format: int64
+          in: query
+          name: user_id
+          required: true
+          type: integer
+        - default: 1
+          description: 页码
+          in: query
+          name: page
+          type: integer
+        - default: 30
+          description: 每页数量
+          in: query
+          name: size
+          type: integer
+      produces:
+        - application/json
+      responses:
+        "200":
+          description: 查询成功
+          schema:
+            allOf:
+              - $ref: '#/definitions/res.Response'
+              - properties:
+                  data:
+                    items:
+                      $ref: '#/definitions/dto.VideoInfoRes'
+                    type: array
+                type: object
+      summary: 获取用户视频列表
+      tags:
+        - 视频模块
+  /gateway/video/publish:
+    post:
+      consumes:
+        - application/json
+      description: 用户发布视频
+      parameters:
+        - description: 视频信息
+          in: body
+          name: data
+          required: true
+          schema:
+            $ref: '#/definitions/dto.PublishVideoReq'
+      produces:
+        - application/json
+      responses:
+        "200":
+          description: 发布成功
+          schema:
+            allOf:
+              - $ref: '#/definitions/res.Response'
+              - properties:
+                  data:
+                    $ref: '#/definitions/dto.PublishVideoResp'
+                type: object
+        "400":
+          description: 参数错误
+          schema:
+            $ref: '#/definitions/res.Response'
+      security:
+        - Bearer: [ ]
+      summary: 发布视频
+      tags:
+        - 视频模块
 swagger: "2.0"

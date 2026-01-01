@@ -1,6 +1,8 @@
 package model
 
-// ChatSession 会话列表模型
+import "sponge/internal/consts"
+
+// ChatSession 会话列表
 type ChatSession struct {
 	BaseModel
 	UserID      int64  `gorm:"uniqueIndex:uk_user_peer;not null" json:"user_id,string"`
@@ -9,7 +11,7 @@ type ChatSession struct {
 	UnreadCount int    `gorm:"default:0" json:"unread_count"`
 }
 
-// ChatMessage 消息详情模型
+// ChatMessage 消息详情
 type ChatMessage struct {
 	BaseModel
 	FromID  int64  `gorm:"index:idx_from_to;index:idx_to_from;not null" json:"from_id,string"`
@@ -18,3 +20,9 @@ type ChatMessage struct {
 	Content string `gorm:"type:text;not null" json:"content"`
 	IsRead  int8   `gorm:"default:0" json:"is_read"`
 }
+
+func (ChatSession) TableName() string {
+	return consts.ChatSessionTableName
+}
+
+func (ChatMessage) TableName() string { return consts.ChatMessageTableName }

@@ -1,5 +1,7 @@
 package model
 
+import "sponge/internal/consts"
+
 // Comment 评论表
 type Comment struct {
 	BaseModel
@@ -10,3 +12,5 @@ type Comment struct {
 	Content   string `gorm:"type:text;not null" json:"content"`
 	LikeCount int    `gorm:"default:0" json:"like_count"`
 }
+
+func (Comment) TableName() string { return consts.CommentTableName }

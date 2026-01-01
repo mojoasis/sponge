@@ -27,9 +27,8 @@ require (
 	github.com/go-playground/validator/v10 v10.30.1
 	github.com/google/wire v0.7.0
 	github.com/jinzhu/copier v0.4.0
-	github.com/swaggo/files v1.0.1
-	github.com/swaggo/gin-swagger v1.6.1
 	github.com/swaggo/swag v1.16.6
+	github.com/wdcbot/qingfeng v1.5.9
 	go.uber.org/zap v1.21.0
 	golang.org/x/crypto v0.46.0
 )

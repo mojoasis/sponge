@@ -9,13 +9,13 @@ import (
 var JwtSecret = []byte("w45dsajg670qw") // 从配置读取
 
 type Claims struct {
-	UserID   string `json:"user_id"`
+	UserID   int64  `json:"user_id"`
 	UserName string `json:"username"`
 	jwt.RegisteredClaims
 }
 
 // GenerateToken 生成 Token
-func GenerateToken(userID, username string) (string, error) {
+func GenerateToken(userID int64, username string) (string, error) {
 	now := time.Now()
 	expireTime := now.Add(24 * time.Hour) // Token 自身的有效期
 
@@ -24,7 +24,7 @@ func GenerateToken(userID, username string) (string, error) {
 		UserName: username,
 		RegisteredClaims: jwt.RegisteredClaims{
 			ExpiresAt: jwt.NewNumericDate(expireTime),
-			Issuer:    "tiktok-server",
+			Issuer:    "sponge-server",
 		},
 	}
 

@@ -5,8 +5,7 @@ import (
 	v1 "sponge/internal/api/v1"
 
 	"github.com/gin-gonic/gin"
-	swaggerFiles "github.com/swaggo/files"
-	ginSwagger "github.com/swaggo/gin-swagger"
+	"github.com/wdcbot/qingfeng"
 )
 
 // RouterGroup 路由组容器，由 Wire 自动注入 API 实例
@@ -17,20 +16,36 @@ type RouterGroup struct {
 
 // NewRouterGroup 构造函数，供 Wire 调用
 // 接受所有实现了 RouterRegistrar 接口的模块
-func NewRouterGroup(userApi *v1.UserApi) *RouterGroup {
+func NewRouterGroup(
+	userApi *v1.UserApi,
+	videoApi *v1.VideoApi,
+	followApi *v1.FollowApi,
+	likeApi *v1.LikeApi,
+	commentApi *v1.CommentApi,
+	chatApi *v1.ChatApi,
+) *RouterGroup {
 	return &RouterGroup{
 		registrars: []RouterRegistrar{
 			NewUserRouterRegistrar(userApi),
+			NewVideoRouterRegistrar(videoApi),
+			NewFollowRouterRegistrar(followApi),
+			NewLikeRouterRegistrar(likeApi),
+			NewCommentRouterRegistrar(commentApi),
+			NewChatRouterRegistrar(chatApi),
 		},
-		// 以后增加模块只需在这里添加：
-		// NewVideoRouterRegistrar(videoApi),
 	}
 }
 
 // Init 核心注册逻辑
 func (g *RouterGroup) Init(r *gin.Engine) {
-	// 1. 全局非业务路由
-	r.GET("/swagger/*any", ginSwagger.WrapHandler(swaggerFiles.Handler))
+	// swagger
+	//r.GET("/swagger/*any", ginSwagger.WrapHandler(swaggerFiles.Handler))
+	// 替换青峰Swag
+	r.GET("/doc/*any", qingfeng.Handler(qingfeng.Config{
+		Title:    "sponge",
+		BasePath: "/doc",
+		DocPath:  "./docs/swagger.json",
+	}))
 
 	// 2. 统一网关前缀
 	gateway := r.Group("/gateway")

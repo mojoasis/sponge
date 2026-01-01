@@ -1,6 +1,9 @@
 package model
 
-import "time"
+import (
+	"sponge/internal/consts"
+	"time"
+)
 
 // Video 视频表
 type Video struct {
@@ -19,3 +22,5 @@ type Video struct {
 	Status        int8      `gorm:"default:1" json:"status"`
 	PublishTime   time.Time `json:"publish_time"`
 }
+
+func (Video) TableName() string { return consts.VideosTableName }

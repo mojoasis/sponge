@@ -1,5 +1,7 @@
 package model
 
+import "sponge/internal/consts"
+
 // Like 点赞表
 type Like struct {
 	BaseModel
@@ -7,3 +9,5 @@ type Like struct {
 	VideoID int64 `gorm:"uniqueIndex:uk_user_video;index;not null" json:"video_id,string"`
 	Status  int8  `gorm:"default:1;comment:1-点赞, 0-取消点赞" json:"status"`
 }
+
+func (Like) TableName() string { return consts.FavoritesTableName }
