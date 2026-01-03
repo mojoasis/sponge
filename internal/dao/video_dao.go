@@ -24,6 +24,17 @@ func (d *VideoDao) CreateVideo(ctx context.Context, video *model.Video) error {
 	return d.db.WithContext(ctx).Create(video).Error
 }
 
+// CreateVideos 批量创建视频
+func (d *VideoDao) CreateVideos(ctx context.Context, videos []*model.Video) error {
+	if len(videos) == 0 {
+		return nil
+	}
+	// CreateInBatches 会自动将切片拆分为指定大小的块进行插入
+	// 这样可以避免一次性发送巨大的 SQL 导致数据库内存溢出或超过 max_allowed_packet
+	// 推荐分片大小为 100-500，取决于你的字段数量
+	return d.db.WithContext(ctx).CreateInBatches(videos, 100).Error
+}
+
 // GetVideoByID 根据ID查询视频
 func (d *VideoDao) GetVideoByID(ctx context.Context, id int64) (*model.Video, error) {
 	var video model.Video

@@ -1,7 +1,7 @@
 package model
 
 import (
-	"sponge/internal/consts"
+	"sponge/pkg/constants"
 )
 
 // User 状态常量定义
@@ -25,4 +25,4 @@ type User struct {
 	Status          int8   `gorm:"type:tinyint;default:1;comment:状态: 1-正常, 2-禁用, 3-注销" json:"status"`
 }
 
-func (User) TableName() string { return consts.UserTableName }
+func (User) TableName() string { return constants.UserTableName }

@@ -25,7 +25,7 @@ import (
 // @name Authorization
 
 func main() {
-	// 1. 初始化所有配置和资源
+	// 初始化所有配置和资源
 	initialize.InitConfig()
 
 	srv, cleanup, err := InitApp()
@@ -34,8 +34,7 @@ func main() {
 	}
 	defer cleanup()
 
-	// 3. 启动服务
-	fmt.Printf("服务启动成功，端口: %d\n", global.Config.Server.Port)
+	// 启动服务
 	if err := srv.Engine.Run(fmt.Sprintf(":%d", global.Config.Server.Port)); err != nil {
 		panic(err)
 	}

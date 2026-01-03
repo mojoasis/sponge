@@ -33,7 +33,7 @@ func NewUserApi(svc *service.UserService) *UserApi {
 // @Failure      400   {object}  res.Response "参数错误"
 // @Failure      500   {object}  res.Response "系统异常"
 // @Router       /gateway/user/v1/register [post]
-func (u *UserApi) Register(c *gin.Context) {
+func (a *UserApi) Register(c *gin.Context) {
 	var req dto.RegisterReq
 	// 绑定并校验参数
 	if err := c.ShouldBindJSON(&req); err != nil {
@@ -45,7 +45,7 @@ func (u *UserApi) Register(c *gin.Context) {
 		return
 	}
 	// 注册
-	if err := u.userService.Register(c.Request.Context(), &req); err != nil {
+	if err := a.userService.Register(c.Request.Context(), &req); err != nil {
 		res.FailMsg(err.Error(), c)
 		return
 	}
@@ -108,7 +108,7 @@ func (a *UserApi) Login(c *gin.Context) {
 // @Success      200   {object}  res.Response{data=dto.UserInfoRes} "查询成功"
 // @Failure      401   {object}  res.Response "未授权或Token失效"
 // @Router       /gateway/user/v1/profile [get]
-func (u *UserApi) UserProfile(c *gin.Context) {
+func (a *UserApi) UserProfile(c *gin.Context) {
 	// 从上下文中获取中间件解析出的 UserID
 	userID, exists := c.Get("userID")
 	if !exists {
@@ -116,7 +116,7 @@ func (u *UserApi) UserProfile(c *gin.Context) {
 		return
 	}
 	// 查询用户信息
-	user, err := u.userService.GetUserProfile(c.Request.Context(), userID.(int64))
+	user, err := a.userService.GetUserProfile(c.Request.Context(), userID.(int64))
 	if err != nil {
 		res.FailMsg("获取用户信息失败", c)
 		return
@@ -141,7 +141,7 @@ func (u *UserApi) UserProfile(c *gin.Context) {
 // @Param        data  body      dto.UpdateUserProfileReq  true  "修改成功"
 // @Success      200   {object}  res.Response "修改成功"
 // @Router       /gateway/user/v1/update/profile [post]
-func (u *UserApi) UpdateUserProfile(c *gin.Context) {
+func (a *UserApi) UpdateUserProfile(c *gin.Context) {
 	var req dto.UpdateUserProfileReq
 	if err := c.ShouldBindJSON(&req); err != nil {
 		res.FailMsg(utils.Translate(err), c)
@@ -152,7 +152,7 @@ func (u *UserApi) UpdateUserProfile(c *gin.Context) {
 	userID := res.GetUserID(c)
 
 	// 1. 调用 service，获取更新后的完整实体
-	updatedUser, err := u.userService.UpdateUserProfile(c.Request.Context(), userID, &req)
+	updatedUser, err := a.userService.UpdateUserProfile(c.Request.Context(), userID, &req)
 	if err != nil {
 		res.FailMsg("更新失败: "+err.Error(), c)
 		return
@@ -181,7 +181,7 @@ func (u *UserApi) UpdateUserProfile(c *gin.Context) {
 // @Param        data  body      dto.UpdatePasswordReq  true  "修改密码信息"
 // @Success      200   {object}  res.Response "修改成功"
 // @Router       /gateway/user/v1/update/password [post]
-func (u *UserApi) UpdatePassword(c *gin.Context) {
+func (a *UserApi) UpdatePassword(c *gin.Context) {
 	var req dto.UpdatePasswordReq
 	if err := c.ShouldBindJSON(&req); err != nil {
 		// 调用翻译器
@@ -196,7 +196,7 @@ func (u *UserApi) UpdatePassword(c *gin.Context) {
 	// 从 Context 获取当前登录用户 ID (假设在 JWT 中间件已存入)
 	uid := c.GetInt64("userID")
 
-	err := u.userService.UpdatePassword(c, uid, &req)
+	err := a.userService.UpdatePassword(c, uid, &req)
 	if err != nil {
 		res.FailMsg(err.Error(), c)
 		return
@@ -214,7 +214,7 @@ func (u *UserApi) UpdatePassword(c *gin.Context) {
 // @Param        data  body      dto.UpdatePhoneReq  true  "修改手机号信息"
 // @Success      200   {object}  res.Response "修改成功"
 // @Router       /gateway/user/v1/update/phone [post]
-func (u *UserApi) UpdatePhone(c *gin.Context) {
+func (a *UserApi) UpdatePhone(c *gin.Context) {
 	var req dto.UpdatePhoneReq
 	if err := c.ShouldBindJSON(&req); err != nil {
 		// 调用翻译器
@@ -228,7 +228,7 @@ func (u *UserApi) UpdatePhone(c *gin.Context) {
 
 	uid := c.GetInt64("userID")
 
-	err := u.userService.UpdatePhone(c.Request.Context(), uid, &req)
+	err := a.userService.UpdatePhone(c.Request.Context(), uid, &req)
 	if err != nil {
 		res.FailMsg(err.Error(), c)
 		return

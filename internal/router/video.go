@@ -16,7 +16,7 @@ func NewVideoRouterRegistrar(api *v1.VideoApi) *VideoRouterRegistrar {
 }
 
 func (r *VideoRouterRegistrar) RegisterRoutes(rg *gin.RouterGroup) {
-	video := rg.Group("/video")
+	video := rg.Group("/video/v1")
 	{
 		// 公开路由
 		public := video.Group("/")

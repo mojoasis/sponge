@@ -3,9 +3,10 @@ package service
 import (
 	"context"
 	"errors"
-	"sponge/internal/consts"
 	"sponge/internal/dao"
 	"sponge/internal/model"
+	"sponge/internal/model/dto"
+	"sponge/pkg/constants"
 	"time"
 
 	"gorm.io/gorm"
@@ -26,34 +27,47 @@ func NewVideoService(videoDao *dao.VideoDao, userDao *dao.UserDao, likeDao *dao.
 }
 
 // PublishVideo 发布视频
-func (s *VideoService) PublishVideo(ctx context.Context, userID int64, req *model.Video) (*model.Video, error) {
-	video := &model.Video{
-		UserID:        userID,
-		Title:         req.Title,
-		Description:   req.Description,
-		PlayUrl:       req.PlayUrl,
-		CoverUrl:      req.CoverUrl,
-		Width:         req.Width,
-		Height:        req.Height,
-		Duration:      req.Duration,
-		FavoriteCount: 0,
-		CommentCount:  0,
-		ViewCount:     0,
-		Status:        1,
-		PublishTime:   time.Now(),
+func (s *VideoService) PublishVideo(ctx context.Context, userID int64, req *dto.PublishVideoReq) error {
+	// 1. 获取上传结果
+	uploadFileReq := dto.UploadFileReq{
+		Files: req.Files,
+	}
+	uploadedVideos := UploadVideo(ctx, userID, &uploadFileReq)
+	if len(uploadedVideos) == 0 {
+		return nil // 或者返回一个错误，表示没有成功的视频
 	}
 
-	if err := s.videoDao.CreateVideo(ctx, video); err != nil {
-		return nil, err
+	// 2. 预分配空间，性能更好
+	results := make([]*model.Video, 0, len(uploadedVideos))
+
+	// 3. 显式转换
+	for _, v := range uploadedVideos {
+		// 创建新对象并赋值
+		results = append(results, &model.Video{
+			UserID:      userID,
+			Title:       req.Title,
+			Description: req.Description,
+			// 字段映射：注意 FileUrl 映射到 PlayUrl
+			PlayUrl:  v.FileUrl,
+			CoverUrl: v.CoverUrl,
+			Width:    v.Width,
+			Height:   v.Height,
+			Duration: v.Duration,
+			// 其他默认字段
+			Status:      1,
+			PublishTime: time.Now(),
+			// Title 和 Description 可以根据业务需求从 req 中获取
+		})
 	}
 
-	return video, nil
+	// 4. 调用你之前写的高性能批量创建方法
+	return s.videoDao.CreateVideos(ctx, results)
 }
 
 // GetVideoList 获取用户视频列表
 func (s *VideoService) GetVideoList(ctx context.Context, userID int64, currentUserID int64, page, size int) ([]*model.Video, int64, error) {
 	if size <= 0 {
-		size = consts.VideoFeedCount
+		size = constants.VideoFeedCount
 	}
 	if page <= 0 {
 		page = 1
@@ -79,7 +93,7 @@ func (s *VideoService) GetVideoList(ctx context.Context, userID int64, currentUs
 // GetVideoFeed 获取视频流
 func (s *VideoService) GetVideoFeed(ctx context.Context, currentUserID int64, latestTime int64, size int) ([]*model.Video, int64, error) {
 	if size <= 0 {
-		size = consts.VideoFeedCount
+		size = constants.VideoFeedCount
 	}
 
 	videos, err := s.videoDao.GetVideoFeed(ctx, latestTime, size)
@@ -96,7 +110,7 @@ func (s *VideoService) GetVideoFeed(ctx context.Context, currentUserID int64, la
 }
 
 // GetVideoByID 获取视频详情
-func (s *VideoService) GetVideoByID(ctx context.Context, videoID int64, currentUserID int64) (*model.Video, error) {
+func (s *VideoService) GetVideoByID(ctx context.Context, videoID int64) (*model.Video, error) {
 	video, err := s.videoDao.GetVideoByID(ctx, videoID)
 	if err != nil {
 		if errors.Is(err, gorm.ErrRecordNotFound) {

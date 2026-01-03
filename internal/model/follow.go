@@ -1,6 +1,6 @@
 package model
 
-import "sponge/internal/consts"
+import "sponge/pkg/constants"
 
 // Follow 粉丝关注表
 type Follow struct {
@@ -10,4 +10,4 @@ type Follow struct {
 	IsMutual   int8  `gorm:"default:0" json:"is_mutual"` // 1-互关, 0-单向
 }
 
-func (Follow) TableName() string { return consts.FollowsTableName }
+func (Follow) TableName() string { return constants.FollowsTableName }

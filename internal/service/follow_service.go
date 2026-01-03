@@ -3,9 +3,9 @@ package service
 import (
 	"context"
 	"errors"
-	"sponge/internal/consts"
 	"sponge/internal/dao"
 	"sponge/internal/model"
+	"sponge/pkg/constants"
 )
 
 type FollowService struct {
@@ -32,7 +32,7 @@ func (s *FollowService) FollowAction(ctx context.Context, userID, toUserID int64
 		return errors.New("目标用户不存在")
 	}
 
-	if action == consts.FavoriteActionType { // 1-关注
+	if action == constants.FavoriteActionType { // 1-关注
 		// 检查是否已关注
 		if s.followDao.IsFollowing(ctx, toUserID, userID) {
 			return errors.New("已经关注过了")
@@ -55,7 +55,7 @@ func (s *FollowService) FollowAction(ctx context.Context, userID, toUserID int64
 			_ = s.followDao.UpdateMutualStatus(ctx, userID, toUserID, 1)
 		}
 
-	} else if action == consts.UnFavoriteActionType { // 2-取消关注
+	} else if action == constants.UnFavoriteActionType { // 2-取消关注
 		// 检查是否已关注
 		if !s.followDao.IsFollowing(ctx, toUserID, userID) {
 			return errors.New("未关注该用户")

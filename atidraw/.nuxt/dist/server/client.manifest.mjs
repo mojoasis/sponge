@@ -1,0 +1,1 @@
+export { default } from "file:///Users/mojito/Code/atidraw/node_modules/.pnpm/@nuxt+vite-builder@4.2.2_@types+node@25.0.3_eslint@9.39.2_jiti@2.6.1__lightningcss@1.30_0a3a3b79d012b5853a2e3b577dd31e16/node_modules/@nuxt/vite-builder/dist/runtime/client.manifest.mjs"

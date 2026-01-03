@@ -1,7 +1,7 @@
 package model
 
 import (
-	"sponge/internal/consts"
+	"sponge/pkg/constants"
 	"time"
 )
 
@@ -23,4 +23,4 @@ type Video struct {
 	PublishTime   time.Time `json:"publish_time"`
 }
 
-func (Video) TableName() string { return consts.VideosTableName }
+func (Video) TableName() string { return constants.VideosTableName }

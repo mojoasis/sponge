@@ -880,7 +880,7 @@ const docTemplate = `{
                 }
             }
         },
-        "/gateway/video/feed": {
+        "/gateway/video/v1/feed": {
             "get": {
                 "description": "获取推荐视频流",
                 "consumes": [
@@ -898,7 +898,7 @@ const docTemplate = `{
                         "type": "integer",
                         "format": "int64",
                         "description": "最新时间戳（分页）",
-                        "name": "latest_time",
+                        "name": "latestTime",
                         "in": "query"
                     },
                     {
@@ -941,7 +941,7 @@ const docTemplate = `{
                 }
             }
         },
-        "/gateway/video/list": {
+        "/gateway/video/v1/list": {
             "get": {
                 "description": "获取指定用户的视频列表",
                 "consumes": [
@@ -959,7 +959,7 @@ const docTemplate = `{
                         "type": "integer",
                         "format": "int64",
                         "description": "用户ID",
-                        "name": "user_id",
+                        "name": "userId",
                         "in": "query",
                         "required": true
                     },
@@ -1003,16 +1003,16 @@ const docTemplate = `{
                 }
             }
         },
-        "/gateway/video/publish": {
+        "/gateway/video/v1/publish": {
             "post": {
                 "security": [
                     {
                         "Bearer": []
                     }
                 ],
-                "description": "用户发布视频",
+                "description": "采用流式上传技术，在上传过程中实时完成视频抽帧。接口返回视频播放地址和封面图地址。",
                 "consumes": [
-                    "application/json"
+                    "multipart/form-data"
                 ],
                 "produces": [
                     "application/json"
@@ -1020,39 +1020,50 @@ const docTemplate = `{
                 "tags": [
                     "视频模块"
                 ],
-                "summary": "发布视频",
+                "summary": "批量上传视频",
                 "parameters": [
                     {
-                        "description": "视频信息",
-                        "name": "data",
-                        "in": "body",
-                        "required": true,
-                        "schema": {
-                            "$ref": "#/definitions/dto.PublishVideoReq"
-                        }
+                        "type": "string",
+                        "description": "视频标题",
+                        "name": "title",
+                        "in": "formData",
+                        "required": true
+                    },
+                    {
+                        "type": "string",
+                        "description": "视频描述",
+                        "name": "description",
+                        "in": "formData"
+                    },
+                    {
+                        "type": "file",
+                        "description": "视频文件(多选)",
+                        "name": "files",
+                        "in": "formData",
+                        "required": true
                     }
                 ],
                 "responses": {
                     "200": {
                         "description": "发布成功",
                         "schema": {
-                            "allOf": [
-                                {
-                                    "$ref": "#/definitions/res.Response"
-                                },
-                                {
-                                    "type": "object",
-                                    "properties": {
-                                        "data": {
-                                            "$ref": "#/definitions/dto.PublishVideoResp"
-                                        }
-                                    }
-                                }
-                            ]
+                            "$ref": "#/definitions/res.Response"
                         }
                     },
                     "400": {
-                        "description": "参数错误",
+                        "description": "参数校验失败",
+                        "schema": {
+                            "$ref": "#/definitions/res.Response"
+                        }
+                    },
+                    "401": {
+                        "description": "登录失效",
+                        "schema": {
+                            "$ref": "#/definitions/res.Response"
+                        }
+                    },
+                    "500": {
+                        "description": "服务器内部错误",
                         "schema": {
                             "$ref": "#/definitions/res.Response"
                         }
@@ -1278,51 +1289,6 @@ const docTemplate = `{
                 }
             }
         },
-        "dto.PublishVideoReq": {
-            "type": "object",
-            "required": [
-                "cover_url",
-                "play_url",
-                "title"
-            ],
-            "properties": {
-                "cover_url": {
-                    "type": "string"
-                },
-                "description": {
-                    "type": "string",
-                    "maxLength": 1000
-                },
-                "duration": {
-                    "type": "number",
-                    "minimum": 0
-                },
-                "height": {
-                    "type": "integer",
-                    "minimum": 0
-                },
-                "play_url": {
-                    "type": "string"
-                },
-                "title": {
-                    "type": "string",
-                    "maxLength": 255
-                },
-                "width": {
-                    "type": "integer",
-                    "minimum": 0
-                }
-            }
-        },
-        "dto.PublishVideoResp": {
-            "type": "object",
-            "properties": {
-                "video_id": {
-                    "type": "string",
-                    "example": "0"
-                }
-            }
-        },
         "dto.RegisterReq": {
             "type": "object",
             "required": [
@@ -1517,10 +1483,10 @@ const docTemplate = `{
                         }
                     ]
                 },
-                "comment_count": {
+                "commentCount": {
                     "type": "integer"
                 },
-                "cover_url": {
+                "coverUrl": {
                     "type": "string"
                 },
                 "description": {
@@ -1529,7 +1495,7 @@ const docTemplate = `{
                 "duration": {
                     "type": "number"
                 },
-                "favorite_count": {
+                "favoriteCount": {
                     "type": "integer"
                 },
                 "height": {
@@ -1539,24 +1505,24 @@ const docTemplate = `{
                     "type": "string",
                     "example": "0"
                 },
-                "is_favorite": {
+                "isFavorite": {
                     "description": "当前用户是否点赞",
                     "type": "boolean"
                 },
-                "play_url": {
+                "playUrl": {
                     "type": "string"
                 },
-                "publish_time": {
+                "publishTime": {
                     "type": "string"
                 },
                 "title": {
                     "type": "string"
                 },
-                "user_id": {
+                "userId": {
                     "type": "string",
                     "example": "0"
                 },
-                "view_count": {
+                "viewCount": {
                     "type": "integer"
                 },
                 "width": {

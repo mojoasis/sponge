@@ -1,1574 +1,1540 @@
 {
-  "swagger": "2.0",
-  "info": {
-    "description": "基于 Gin + Gorm + Wire 的企业级后端服务",
-    "title": "Sponge API",
-    "termsOfService": "https://github.com/Mojitocean/sponge",
-    "contact": {
-      "name": "API Support",
-      "url": "http://www.swagger.io/support",
-      "email": "support@swagger.io"
+    "swagger": "2.0",
+    "info": {
+        "description": "基于 Gin + Gorm + Wire 的企业级后端服务",
+        "title": "Sponge API",
+        "termsOfService": "https://github.com/Mojitocean/sponge",
+        "contact": {
+            "name": "API Support",
+            "url": "http://www.swagger.io/support",
+            "email": "support@swagger.io"
+        },
+        "license": {
+            "name": "Apache 2.0",
+            "url": "http://www.apache.org/licenses/LICENSE-2.0.html"
+        },
+        "version": "1.0"
     },
-    "license": {
-      "name": "Apache 2.0",
-      "url": "http://www.apache.org/licenses/LICENSE-2.0.html"
-    },
-    "version": "1.0"
-  },
-  "host": "localhost:18888",
-  "basePath": "/gateway",
-  "paths": {
-    "/gateway/chat/message": {
-      "post": {
-        "security": [
-          {
-            "Bearer": []
-          }
-        ],
-        "description": "发送聊天消息",
-        "consumes": [
-          "application/json"
-        ],
-        "produces": [
-          "application/json"
-        ],
-        "tags": [
-          "聊天模块"
-        ],
-        "summary": "发送消息",
-        "parameters": [
-          {
-            "description": "消息信息",
-            "name": "data",
-            "in": "body",
-            "required": true,
-            "schema": {
-              "$ref": "#/definitions/dto.SendMessageReq"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "发送成功",
-            "schema": {
-              "allOf": [
-                {
-                  "$ref": "#/definitions/res.Response"
-                },
-                {
-                  "type": "object",
-                  "properties": {
-                    "data": {
-                      "$ref": "#/definitions/dto.MessageInfoRes"
+    "host": "localhost:18888",
+    "basePath": "/gateway",
+    "paths": {
+        "/gateway/chat/message": {
+            "post": {
+                "security": [
+                    {
+                        "Bearer": []
                     }
-                  }
-                }
-              ]
-            }
-          }
-        }
-      }
-    },
-    "/gateway/chat/message/list": {
-      "get": {
-        "security": [
-          {
-            "Bearer": []
-          }
-        ],
-        "description": "获取与指定用户的消息列表",
-        "consumes": [
-          "application/json"
-        ],
-        "produces": [
-          "application/json"
-        ],
-        "tags": [
-          "聊天模块"
-        ],
-        "summary": "获取消息列表",
-        "parameters": [
-          {
-            "type": "integer",
-            "format": "int64",
-            "description": "对方用户ID",
-            "name": "to_user_id",
-            "in": "query",
-            "required": true
-          },
-          {
-            "type": "integer",
-            "default": 1,
-            "description": "页码",
-            "name": "page",
-            "in": "query"
-          },
-          {
-            "type": "integer",
-            "default": 20,
-            "description": "每页数量",
-            "name": "size",
-            "in": "query"
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "查询成功",
-            "schema": {
-              "allOf": [
-                {
-                  "$ref": "#/definitions/res.Response"
-                },
-                {
-                  "type": "object",
-                  "properties": {
-                    "data": {
-                      "type": "array",
-                      "items": {
-                        "$ref": "#/definitions/dto.MessageInfoRes"
-                      }
+                ],
+                "description": "发送聊天消息",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "聊天模块"
+                ],
+                "summary": "发送消息",
+                "parameters": [
+                    {
+                        "description": "消息信息",
+                        "name": "data",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/dto.SendMessageReq"
+                        }
                     }
-                  }
-                }
-              ]
-            }
-          }
-        }
-      }
-    },
-    "/gateway/chat/session/list": {
-      "get": {
-        "security": [
-          {
-            "Bearer": []
-          }
-        ],
-        "description": "获取用户的聊天会话列表",
-        "consumes": [
-          "application/json"
-        ],
-        "produces": [
-          "application/json"
-        ],
-        "tags": [
-          "聊天模块"
-        ],
-        "summary": "获取会话列表",
-        "parameters": [
-          {
-            "type": "integer",
-            "default": 1,
-            "description": "页码",
-            "name": "page",
-            "in": "query"
-          },
-          {
-            "type": "integer",
-            "default": 20,
-            "description": "每页数量",
-            "name": "size",
-            "in": "query"
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "查询成功",
-            "schema": {
-              "allOf": [
-                {
-                  "$ref": "#/definitions/res.Response"
-                },
-                {
-                  "type": "object",
-                  "properties": {
-                    "data": {
-                      "type": "array",
-                      "items": {
-                        "$ref": "#/definitions/dto.ChatSessionRes"
-                      }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "发送成功",
+                        "schema": {
+                            "allOf": [
+                                {
+                                    "$ref": "#/definitions/res.Response"
+                                },
+                                {
+                                    "type": "object",
+                                    "properties": {
+                                        "data": {
+                                            "$ref": "#/definitions/dto.MessageInfoRes"
+                                        }
+                                    }
+                                }
+                            ]
+                        }
                     }
-                  }
                 }
-              ]
             }
-          }
-        }
-      }
-    },
-    "/gateway/comment/action": {
-      "post": {
-        "security": [
-          {
-            "Bearer": []
-          }
-        ],
-        "description": "发布或删除评论",
-        "consumes": [
-          "application/json"
-        ],
-        "produces": [
-          "application/json"
-        ],
-        "tags": [
-          "评论模块"
-        ],
-        "summary": "评论操作",
-        "parameters": [
-          {
-            "description": "评论信息",
-            "name": "data",
-            "in": "body",
-            "required": true,
-            "schema": {
-              "$ref": "#/definitions/dto.CommentActionReq"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "操作成功",
-            "schema": {
-              "allOf": [
-                {
-                  "$ref": "#/definitions/res.Response"
-                },
-                {
-                  "type": "object",
-                  "properties": {
-                    "data": {
-                      "$ref": "#/definitions/dto.CommentInfoRes"
+        },
+        "/gateway/chat/message/list": {
+            "get": {
+                "security": [
+                    {
+                        "Bearer": []
                     }
-                  }
+                ],
+                "description": "获取与指定用户的消息列表",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "聊天模块"
+                ],
+                "summary": "获取消息列表",
+                "parameters": [
+                    {
+                        "type": "integer",
+                        "format": "int64",
+                        "description": "对方用户ID",
+                        "name": "to_user_id",
+                        "in": "query",
+                        "required": true
+                    },
+                    {
+                        "type": "integer",
+                        "default": 1,
+                        "description": "页码",
+                        "name": "page",
+                        "in": "query"
+                    },
+                    {
+                        "type": "integer",
+                        "default": 20,
+                        "description": "每页数量",
+                        "name": "size",
+                        "in": "query"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "查询成功",
+                        "schema": {
+                            "allOf": [
+                                {
+                                    "$ref": "#/definitions/res.Response"
+                                },
+                                {
+                                    "type": "object",
+                                    "properties": {
+                                        "data": {
+                                            "type": "array",
+                                            "items": {
+                                                "$ref": "#/definitions/dto.MessageInfoRes"
+                                            }
+                                        }
+                                    }
+                                }
+                            ]
+                        }
+                    }
                 }
-              ]
             }
-          }
+        },
+        "/gateway/chat/session/list": {
+            "get": {
+                "security": [
+                    {
+                        "Bearer": []
+                    }
+                ],
+                "description": "获取用户的聊天会话列表",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "聊天模块"
+                ],
+                "summary": "获取会话列表",
+                "parameters": [
+                    {
+                        "type": "integer",
+                        "default": 1,
+                        "description": "页码",
+                        "name": "page",
+                        "in": "query"
+                    },
+                    {
+                        "type": "integer",
+                        "default": 20,
+                        "description": "每页数量",
+                        "name": "size",
+                        "in": "query"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "查询成功",
+                        "schema": {
+                            "allOf": [
+                                {
+                                    "$ref": "#/definitions/res.Response"
+                                },
+                                {
+                                    "type": "object",
+                                    "properties": {
+                                        "data": {
+                                            "type": "array",
+                                            "items": {
+                                                "$ref": "#/definitions/dto.ChatSessionRes"
+                                            }
+                                        }
+                                    }
+                                }
+                            ]
+                        }
+                    }
+                }
+            }
+        },
+        "/gateway/comment/action": {
+            "post": {
+                "security": [
+                    {
+                        "Bearer": []
+                    }
+                ],
+                "description": "发布或删除评论",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "评论模块"
+                ],
+                "summary": "评论操作",
+                "parameters": [
+                    {
+                        "description": "评论信息",
+                        "name": "data",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/dto.CommentActionReq"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "操作成功",
+                        "schema": {
+                            "allOf": [
+                                {
+                                    "$ref": "#/definitions/res.Response"
+                                },
+                                {
+                                    "type": "object",
+                                    "properties": {
+                                        "data": {
+                                            "$ref": "#/definitions/dto.CommentInfoRes"
+                                        }
+                                    }
+                                }
+                            ]
+                        }
+                    }
+                }
+            }
+        },
+        "/gateway/comment/list": {
+            "get": {
+                "description": "获取视频的评论列表",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "评论模块"
+                ],
+                "summary": "获取评论列表",
+                "parameters": [
+                    {
+                        "type": "integer",
+                        "format": "int64",
+                        "description": "视频ID",
+                        "name": "video_id",
+                        "in": "query",
+                        "required": true
+                    },
+                    {
+                        "type": "integer",
+                        "default": 1,
+                        "description": "页码",
+                        "name": "page",
+                        "in": "query"
+                    },
+                    {
+                        "type": "integer",
+                        "default": 20,
+                        "description": "每页数量",
+                        "name": "size",
+                        "in": "query"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "查询成功",
+                        "schema": {
+                            "allOf": [
+                                {
+                                    "$ref": "#/definitions/res.Response"
+                                },
+                                {
+                                    "type": "object",
+                                    "properties": {
+                                        "data": {
+                                            "type": "array",
+                                            "items": {
+                                                "$ref": "#/definitions/dto.CommentInfoRes"
+                                            }
+                                        }
+                                    }
+                                }
+                            ]
+                        }
+                    }
+                }
+            }
+        },
+        "/gateway/follow/action": {
+            "post": {
+                "security": [
+                    {
+                        "Bearer": []
+                    }
+                ],
+                "description": "关注或取消关注用户",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "关注模块"
+                ],
+                "summary": "关注/取消关注操作",
+                "parameters": [
+                    {
+                        "description": "关注信息",
+                        "name": "data",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/dto.FollowActionReq"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "操作成功",
+                        "schema": {
+                            "$ref": "#/definitions/res.Response"
+                        }
+                    }
+                }
+            }
+        },
+        "/gateway/follow/list": {
+            "get": {
+                "description": "获取用户的关注列表",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "关注模块"
+                ],
+                "summary": "获取关注列表",
+                "parameters": [
+                    {
+                        "type": "integer",
+                        "format": "int64",
+                        "description": "用户ID",
+                        "name": "user_id",
+                        "in": "query",
+                        "required": true
+                    },
+                    {
+                        "type": "integer",
+                        "default": 1,
+                        "description": "页码",
+                        "name": "page",
+                        "in": "query"
+                    },
+                    {
+                        "type": "integer",
+                        "default": 30,
+                        "description": "每页数量",
+                        "name": "size",
+                        "in": "query"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "查询成功",
+                        "schema": {
+                            "allOf": [
+                                {
+                                    "$ref": "#/definitions/res.Response"
+                                },
+                                {
+                                    "type": "object",
+                                    "properties": {
+                                        "data": {
+                                            "type": "array",
+                                            "items": {
+                                                "$ref": "#/definitions/dto.UserRelationRes"
+                                            }
+                                        }
+                                    }
+                                }
+                            ]
+                        }
+                    }
+                }
+            }
+        },
+        "/gateway/follower/list": {
+            "get": {
+                "description": "获取用户的粉丝列表",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "关注模块"
+                ],
+                "summary": "获取粉丝列表",
+                "parameters": [
+                    {
+                        "type": "integer",
+                        "format": "int64",
+                        "description": "用户ID",
+                        "name": "user_id",
+                        "in": "query",
+                        "required": true
+                    },
+                    {
+                        "type": "integer",
+                        "default": 1,
+                        "description": "页码",
+                        "name": "page",
+                        "in": "query"
+                    },
+                    {
+                        "type": "integer",
+                        "default": 30,
+                        "description": "每页数量",
+                        "name": "size",
+                        "in": "query"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "查询成功",
+                        "schema": {
+                            "allOf": [
+                                {
+                                    "$ref": "#/definitions/res.Response"
+                                },
+                                {
+                                    "type": "object",
+                                    "properties": {
+                                        "data": {
+                                            "type": "array",
+                                            "items": {
+                                                "$ref": "#/definitions/dto.UserRelationRes"
+                                            }
+                                        }
+                                    }
+                                }
+                            ]
+                        }
+                    }
+                }
+            }
+        },
+        "/gateway/friend/list": {
+            "get": {
+                "security": [
+                    {
+                        "Bearer": []
+                    }
+                ],
+                "description": "获取互相关注的好友列表",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "关注模块"
+                ],
+                "summary": "获取好友列表",
+                "parameters": [
+                    {
+                        "type": "integer",
+                        "default": 1,
+                        "description": "页码",
+                        "name": "page",
+                        "in": "query"
+                    },
+                    {
+                        "type": "integer",
+                        "default": 30,
+                        "description": "每页数量",
+                        "name": "size",
+                        "in": "query"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "查询成功",
+                        "schema": {
+                            "allOf": [
+                                {
+                                    "$ref": "#/definitions/res.Response"
+                                },
+                                {
+                                    "type": "object",
+                                    "properties": {
+                                        "data": {
+                                            "type": "array",
+                                            "items": {
+                                                "$ref": "#/definitions/dto.UserRelationRes"
+                                            }
+                                        }
+                                    }
+                                }
+                            ]
+                        }
+                    }
+                }
+            }
+        },
+        "/gateway/like/action": {
+            "post": {
+                "security": [
+                    {
+                        "Bearer": []
+                    }
+                ],
+                "description": "点赞或取消点赞视频",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "点赞模块"
+                ],
+                "summary": "点赞/取消点赞操作",
+                "parameters": [
+                    {
+                        "description": "点赞信息",
+                        "name": "data",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/dto.LikeActionReq"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "操作成功",
+                        "schema": {
+                            "$ref": "#/definitions/res.Response"
+                        }
+                    }
+                }
+            }
+        },
+        "/gateway/like/list": {
+            "get": {
+                "description": "获取用户点赞的视频列表",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "点赞模块"
+                ],
+                "summary": "获取点赞列表",
+                "parameters": [
+                    {
+                        "type": "integer",
+                        "format": "int64",
+                        "description": "用户ID",
+                        "name": "user_id",
+                        "in": "query",
+                        "required": true
+                    },
+                    {
+                        "type": "integer",
+                        "default": 1,
+                        "description": "页码",
+                        "name": "page",
+                        "in": "query"
+                    },
+                    {
+                        "type": "integer",
+                        "default": 30,
+                        "description": "每页数量",
+                        "name": "size",
+                        "in": "query"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "查询成功",
+                        "schema": {
+                            "allOf": [
+                                {
+                                    "$ref": "#/definitions/res.Response"
+                                },
+                                {
+                                    "type": "object",
+                                    "properties": {
+                                        "data": {
+                                            "type": "array",
+                                            "items": {
+                                                "$ref": "#/definitions/dto.VideoInfoRes"
+                                            }
+                                        }
+                                    }
+                                }
+                            ]
+                        }
+                    }
+                }
+            }
+        },
+        "/gateway/user/v1/login": {
+            "post": {
+                "description": "通过用户名密码登录并返回JWT",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "用户模块"
+                ],
+                "summary": "用户登录",
+                "parameters": [
+                    {
+                        "description": "登录信息",
+                        "name": "data",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/dto.LoginReq"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "成功",
+                        "schema": {
+                            "$ref": "#/definitions/res.Response"
+                        }
+                    }
+                }
+            }
+        },
+        "/gateway/user/v1/profile": {
+            "get": {
+                "security": [
+                    {
+                        "Bearer": []
+                    }
+                ],
+                "description": "获取个人信息",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "用户模块"
+                ],
+                "summary": "获取个人信息",
+                "responses": {
+                    "200": {
+                        "description": "查询成功",
+                        "schema": {
+                            "allOf": [
+                                {
+                                    "$ref": "#/definitions/res.Response"
+                                },
+                                {
+                                    "type": "object",
+                                    "properties": {
+                                        "data": {
+                                            "$ref": "#/definitions/dto.UserInfoRes"
+                                        }
+                                    }
+                                }
+                            ]
+                        }
+                    },
+                    "401": {
+                        "description": "未授权或Token失效",
+                        "schema": {
+                            "$ref": "#/definitions/res.Response"
+                        }
+                    }
+                }
+            }
+        },
+        "/gateway/user/v1/register": {
+            "post": {
+                "description": "根据用户名和密码创建新用户",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "用户模块"
+                ],
+                "summary": "用户注册",
+                "parameters": [
+                    {
+                        "description": "注册信息",
+                        "name": "data",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/dto.RegisterReq"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "注册成功",
+                        "schema": {
+                            "$ref": "#/definitions/res.Response"
+                        }
+                    },
+                    "400": {
+                        "description": "参数错误",
+                        "schema": {
+                            "$ref": "#/definitions/res.Response"
+                        }
+                    },
+                    "500": {
+                        "description": "系统异常",
+                        "schema": {
+                            "$ref": "#/definitions/res.Response"
+                        }
+                    }
+                }
+            }
+        },
+        "/gateway/user/v1/update/password": {
+            "post": {
+                "security": [
+                    {
+                        "Bearer": []
+                    }
+                ],
+                "description": "修改密码",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "用户模块"
+                ],
+                "summary": "修改密码",
+                "parameters": [
+                    {
+                        "description": "修改密码信息",
+                        "name": "data",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/dto.UpdatePasswordReq"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "修改成功",
+                        "schema": {
+                            "$ref": "#/definitions/res.Response"
+                        }
+                    }
+                }
+            }
+        },
+        "/gateway/user/v1/update/phone": {
+            "post": {
+                "security": [
+                    {
+                        "Bearer": []
+                    }
+                ],
+                "description": "修改手机号",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "用户模块"
+                ],
+                "summary": "修改手机号",
+                "parameters": [
+                    {
+                        "description": "修改手机号信息",
+                        "name": "data",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/dto.UpdatePhoneReq"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "修改成功",
+                        "schema": {
+                            "$ref": "#/definitions/res.Response"
+                        }
+                    }
+                }
+            }
+        },
+        "/gateway/user/v1/update/profile": {
+            "post": {
+                "security": [
+                    {
+                        "Bearer": []
+                    }
+                ],
+                "description": "修改：昵称、头像、签名、背景图片、邮箱",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "用户模块"
+                ],
+                "summary": "修改个人信息",
+                "parameters": [
+                    {
+                        "description": "修改成功",
+                        "name": "data",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/dto.UpdateUserProfileReq"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "修改成功",
+                        "schema": {
+                            "$ref": "#/definitions/res.Response"
+                        }
+                    }
+                }
+            }
+        },
+        "/gateway/video/v1/feed": {
+            "get": {
+                "description": "获取推荐视频流",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "视频模块"
+                ],
+                "summary": "获取视频流",
+                "parameters": [
+                    {
+                        "type": "integer",
+                        "format": "int64",
+                        "description": "最新时间戳（分页）",
+                        "name": "latestTime",
+                        "in": "query"
+                    },
+                    {
+                        "type": "integer",
+                        "default": 1,
+                        "description": "页码",
+                        "name": "page",
+                        "in": "query"
+                    },
+                    {
+                        "type": "integer",
+                        "default": 30,
+                        "description": "每页数量",
+                        "name": "size",
+                        "in": "query"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "查询成功",
+                        "schema": {
+                            "allOf": [
+                                {
+                                    "$ref": "#/definitions/res.Response"
+                                },
+                                {
+                                    "type": "object",
+                                    "properties": {
+                                        "data": {
+                                            "type": "array",
+                                            "items": {
+                                                "$ref": "#/definitions/dto.VideoInfoRes"
+                                            }
+                                        }
+                                    }
+                                }
+                            ]
+                        }
+                    }
+                }
+            }
+        },
+        "/gateway/video/v1/list": {
+            "get": {
+                "description": "获取指定用户的视频列表",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "视频模块"
+                ],
+                "summary": "获取用户视频列表",
+                "parameters": [
+                    {
+                        "type": "integer",
+                        "format": "int64",
+                        "description": "用户ID",
+                        "name": "userId",
+                        "in": "query",
+                        "required": true
+                    },
+                    {
+                        "type": "integer",
+                        "default": 1,
+                        "description": "页码",
+                        "name": "page",
+                        "in": "query"
+                    },
+                    {
+                        "type": "integer",
+                        "default": 30,
+                        "description": "每页数量",
+                        "name": "size",
+                        "in": "query"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "查询成功",
+                        "schema": {
+                            "allOf": [
+                                {
+                                    "$ref": "#/definitions/res.Response"
+                                },
+                                {
+                                    "type": "object",
+                                    "properties": {
+                                        "data": {
+                                            "type": "array",
+                                            "items": {
+                                                "$ref": "#/definitions/dto.VideoInfoRes"
+                                            }
+                                        }
+                                    }
+                                }
+                            ]
+                        }
+                    }
+                }
+            }
+        },
+        "/gateway/video/v1/publish": {
+            "post": {
+                "security": [
+                    {
+                        "Bearer": []
+                    }
+                ],
+                "description": "采用流式上传技术，在上传过程中实时完成视频抽帧。接口返回视频播放地址和封面图地址。",
+                "consumes": [
+                    "multipart/form-data"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "视频模块"
+                ],
+                "summary": "批量上传视频",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "视频标题",
+                        "name": "title",
+                        "in": "formData",
+                        "required": true
+                    },
+                    {
+                        "type": "string",
+                        "description": "视频描述",
+                        "name": "description",
+                        "in": "formData"
+                    },
+                    {
+                        "type": "file",
+                        "description": "视频文件(多选)",
+                        "name": "files",
+                        "in": "formData",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "发布成功",
+                        "schema": {
+                            "$ref": "#/definitions/res.Response"
+                        }
+                    },
+                    "400": {
+                        "description": "参数校验失败",
+                        "schema": {
+                            "$ref": "#/definitions/res.Response"
+                        }
+                    },
+                    "401": {
+                        "description": "登录失效",
+                        "schema": {
+                            "$ref": "#/definitions/res.Response"
+                        }
+                    },
+                    "500": {
+                        "description": "服务器内部错误",
+                        "schema": {
+                            "$ref": "#/definitions/res.Response"
+                        }
+                    }
+                }
+            }
         }
-      }
     },
-    "/gateway/comment/list": {
-      "get": {
-        "description": "获取视频的评论列表",
-        "consumes": [
-          "application/json"
-        ],
-        "produces": [
-          "application/json"
-        ],
-        "tags": [
-          "评论模块"
-        ],
-        "summary": "获取评论列表",
-        "parameters": [
-          {
-            "type": "integer",
-            "format": "int64",
-            "description": "视频ID",
-            "name": "video_id",
-            "in": "query",
-            "required": true
-          },
-          {
-            "type": "integer",
-            "default": 1,
-            "description": "页码",
-            "name": "page",
-            "in": "query"
-          },
-          {
-            "type": "integer",
-            "default": 20,
-            "description": "每页数量",
-            "name": "size",
-            "in": "query"
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "查询成功",
-            "schema": {
-              "allOf": [
-                {
-                  "$ref": "#/definitions/res.Response"
+    "definitions": {
+        "dto.ChatSessionRes": {
+            "type": "object",
+            "properties": {
+                "id": {
+                    "type": "string",
+                    "example": "0"
                 },
-                {
-                  "type": "object",
-                  "properties": {
-                    "data": {
-                      "type": "array",
-                      "items": {
+                "last_message": {
+                    "type": "string"
+                },
+                "peer_id": {
+                    "type": "string",
+                    "example": "0"
+                },
+                "peer_user": {
+                    "description": "对方用户信息",
+                    "allOf": [
+                        {
+                            "$ref": "#/definitions/dto.UserInfoRes"
+                        }
+                    ]
+                },
+                "unread_count": {
+                    "type": "integer"
+                },
+                "updated_at": {
+                    "type": "string"
+                }
+            }
+        },
+        "dto.CommentActionReq": {
+            "type": "object",
+            "required": [
+                "action",
+                "video_id"
+            ],
+            "properties": {
+                "action": {
+                    "description": "1-发布评论, 2-删除评论",
+                    "type": "integer",
+                    "enum": [
+                        1,
+                        2
+                    ]
+                },
+                "comment_id": {
+                    "description": "删除时必填",
+                    "type": "string",
+                    "example": "0"
+                },
+                "content": {
+                    "description": "发布时必填",
+                    "type": "string"
+                },
+                "parent_id": {
+                    "description": "被回复的评论ID（回复时使用）",
+                    "type": "string",
+                    "example": "0"
+                },
+                "root_id": {
+                    "description": "顶层评论ID（回复时使用）",
+                    "type": "string",
+                    "example": "0"
+                },
+                "video_id": {
+                    "type": "string",
+                    "example": "0"
+                }
+            }
+        },
+        "dto.CommentInfoRes": {
+            "type": "object",
+            "properties": {
+                "author": {
+                    "description": "评论作者信息",
+                    "allOf": [
+                        {
+                            "$ref": "#/definitions/dto.UserInfoRes"
+                        }
+                    ]
+                },
+                "content": {
+                    "type": "string"
+                },
+                "created_at": {
+                    "type": "string"
+                },
+                "id": {
+                    "type": "string",
+                    "example": "0"
+                },
+                "is_liked": {
+                    "description": "当前用户是否点赞该评论",
+                    "type": "boolean"
+                },
+                "like_count": {
+                    "type": "integer"
+                },
+                "parent_id": {
+                    "type": "string",
+                    "example": "0"
+                },
+                "replies": {
+                    "description": "回复列表（仅顶层评论有）",
+                    "type": "array",
+                    "items": {
                         "$ref": "#/definitions/dto.CommentInfoRes"
-                      }
                     }
-                  }
-                }
-              ]
-            }
-          }
-        }
-      }
-    },
-    "/gateway/follow/action": {
-      "post": {
-        "security": [
-          {
-            "Bearer": []
-          }
-        ],
-        "description": "关注或取消关注用户",
-        "consumes": [
-          "application/json"
-        ],
-        "produces": [
-          "application/json"
-        ],
-        "tags": [
-          "关注模块"
-        ],
-        "summary": "关注/取消关注操作",
-        "parameters": [
-          {
-            "description": "关注信息",
-            "name": "data",
-            "in": "body",
-            "required": true,
-            "schema": {
-              "$ref": "#/definitions/dto.FollowActionReq"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "操作成功",
-            "schema": {
-              "$ref": "#/definitions/res.Response"
-            }
-          }
-        }
-      }
-    },
-    "/gateway/follow/list": {
-      "get": {
-        "description": "获取用户的关注列表",
-        "consumes": [
-          "application/json"
-        ],
-        "produces": [
-          "application/json"
-        ],
-        "tags": [
-          "关注模块"
-        ],
-        "summary": "获取关注列表",
-        "parameters": [
-          {
-            "type": "integer",
-            "format": "int64",
-            "description": "用户ID",
-            "name": "user_id",
-            "in": "query",
-            "required": true
-          },
-          {
-            "type": "integer",
-            "default": 1,
-            "description": "页码",
-            "name": "page",
-            "in": "query"
-          },
-          {
-            "type": "integer",
-            "default": 30,
-            "description": "每页数量",
-            "name": "size",
-            "in": "query"
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "查询成功",
-            "schema": {
-              "allOf": [
-                {
-                  "$ref": "#/definitions/res.Response"
                 },
-                {
-                  "type": "object",
-                  "properties": {
-                    "data": {
-                      "type": "array",
-                      "items": {
-                        "$ref": "#/definitions/dto.UserRelationRes"
-                      }
-                    }
-                  }
-                }
-              ]
-            }
-          }
-        }
-      }
-    },
-    "/gateway/follower/list": {
-      "get": {
-        "description": "获取用户的粉丝列表",
-        "consumes": [
-          "application/json"
-        ],
-        "produces": [
-          "application/json"
-        ],
-        "tags": [
-          "关注模块"
-        ],
-        "summary": "获取粉丝列表",
-        "parameters": [
-          {
-            "type": "integer",
-            "format": "int64",
-            "description": "用户ID",
-            "name": "user_id",
-            "in": "query",
-            "required": true
-          },
-          {
-            "type": "integer",
-            "default": 1,
-            "description": "页码",
-            "name": "page",
-            "in": "query"
-          },
-          {
-            "type": "integer",
-            "default": 30,
-            "description": "每页数量",
-            "name": "size",
-            "in": "query"
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "查询成功",
-            "schema": {
-              "allOf": [
-                {
-                  "$ref": "#/definitions/res.Response"
+                "reply_count": {
+                    "description": "回复数量（仅顶层评论有）",
+                    "type": "integer"
                 },
-                {
-                  "type": "object",
-                  "properties": {
-                    "data": {
-                      "type": "array",
-                      "items": {
-                        "$ref": "#/definitions/dto.UserRelationRes"
-                      }
-                    }
-                  }
-                }
-              ]
-            }
-          }
-        }
-      }
-    },
-    "/gateway/friend/list": {
-      "get": {
-        "security": [
-          {
-            "Bearer": []
-          }
-        ],
-        "description": "获取互相关注的好友列表",
-        "consumes": [
-          "application/json"
-        ],
-        "produces": [
-          "application/json"
-        ],
-        "tags": [
-          "关注模块"
-        ],
-        "summary": "获取好友列表",
-        "parameters": [
-          {
-            "type": "integer",
-            "default": 1,
-            "description": "页码",
-            "name": "page",
-            "in": "query"
-          },
-          {
-            "type": "integer",
-            "default": 30,
-            "description": "每页数量",
-            "name": "size",
-            "in": "query"
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "查询成功",
-            "schema": {
-              "allOf": [
-                {
-                  "$ref": "#/definitions/res.Response"
+                "root_id": {
+                    "type": "string",
+                    "example": "0"
                 },
-                {
-                  "type": "object",
-                  "properties": {
-                    "data": {
-                      "type": "array",
-                      "items": {
-                        "$ref": "#/definitions/dto.UserRelationRes"
-                      }
-                    }
-                  }
-                }
-              ]
-            }
-          }
-        }
-      }
-    },
-    "/gateway/like/action": {
-      "post": {
-        "security": [
-          {
-            "Bearer": []
-          }
-        ],
-        "description": "点赞或取消点赞视频",
-        "consumes": [
-          "application/json"
-        ],
-        "produces": [
-          "application/json"
-        ],
-        "tags": [
-          "点赞模块"
-        ],
-        "summary": "点赞/取消点赞操作",
-        "parameters": [
-          {
-            "description": "点赞信息",
-            "name": "data",
-            "in": "body",
-            "required": true,
-            "schema": {
-              "$ref": "#/definitions/dto.LikeActionReq"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "操作成功",
-            "schema": {
-              "$ref": "#/definitions/res.Response"
-            }
-          }
-        }
-      }
-    },
-    "/gateway/like/list": {
-      "get": {
-        "description": "获取用户点赞的视频列表",
-        "consumes": [
-          "application/json"
-        ],
-        "produces": [
-          "application/json"
-        ],
-        "tags": [
-          "点赞模块"
-        ],
-        "summary": "获取点赞列表",
-        "parameters": [
-          {
-            "type": "integer",
-            "format": "int64",
-            "description": "用户ID",
-            "name": "user_id",
-            "in": "query",
-            "required": true
-          },
-          {
-            "type": "integer",
-            "default": 1,
-            "description": "页码",
-            "name": "page",
-            "in": "query"
-          },
-          {
-            "type": "integer",
-            "default": 30,
-            "description": "每页数量",
-            "name": "size",
-            "in": "query"
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "查询成功",
-            "schema": {
-              "allOf": [
-                {
-                  "$ref": "#/definitions/res.Response"
+                "user_id": {
+                    "type": "string",
+                    "example": "0"
                 },
-                {
-                  "type": "object",
-                  "properties": {
-                    "data": {
-                      "type": "array",
-                      "items": {
-                        "$ref": "#/definitions/dto.VideoInfoRes"
-                      }
-                    }
-                  }
+                "video_id": {
+                    "type": "string",
+                    "example": "0"
                 }
-              ]
             }
-          }
-        }
-      }
-    },
-    "/gateway/user/v1/login": {
-      "post": {
-        "description": "通过用户名密码登录并返回JWT",
-        "consumes": [
-          "application/json"
-        ],
-        "produces": [
-          "application/json"
-        ],
-        "tags": [
-          "用户模块"
-        ],
-        "summary": "用户登录",
-        "parameters": [
-          {
-            "description": "登录信息",
-            "name": "data",
-            "in": "body",
-            "required": true,
-            "schema": {
-              "$ref": "#/definitions/dto.LoginReq"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "成功",
-            "schema": {
-              "$ref": "#/definitions/res.Response"
-            }
-          }
-        }
-      }
-    },
-    "/gateway/user/v1/profile": {
-      "get": {
-        "security": [
-          {
-            "Bearer": []
-          }
-        ],
-        "description": "获取个人信息",
-        "consumes": [
-          "application/json"
-        ],
-        "produces": [
-          "application/json"
-        ],
-        "tags": [
-          "用户模块"
-        ],
-        "summary": "获取个人信息",
-        "responses": {
-          "200": {
-            "description": "查询成功",
-            "schema": {
-              "allOf": [
-                {
-                  "$ref": "#/definitions/res.Response"
+        },
+        "dto.FollowActionReq": {
+            "type": "object",
+            "required": [
+                "action",
+                "to_user_id"
+            ],
+            "properties": {
+                "action": {
+                    "description": "1-关注, 2-取消关注",
+                    "type": "integer",
+                    "enum": [
+                        1,
+                        2
+                    ]
                 },
-                {
-                  "type": "object",
-                  "properties": {
-                    "data": {
-                      "$ref": "#/definitions/dto.UserInfoRes"
-                    }
-                  }
+                "to_user_id": {
+                    "type": "string",
+                    "example": "0"
                 }
-              ]
             }
-          },
-          "401": {
-            "description": "未授权或Token失效",
-            "schema": {
-              "$ref": "#/definitions/res.Response"
-            }
-          }
-        }
-      }
-    },
-    "/gateway/user/v1/register": {
-      "post": {
-        "description": "根据用户名和密码创建新用户",
-        "consumes": [
-          "application/json"
-        ],
-        "produces": [
-          "application/json"
-        ],
-        "tags": [
-          "用户模块"
-        ],
-        "summary": "用户注册",
-        "parameters": [
-          {
-            "description": "注册信息",
-            "name": "data",
-            "in": "body",
-            "required": true,
-            "schema": {
-              "$ref": "#/definitions/dto.RegisterReq"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "注册成功",
-            "schema": {
-              "$ref": "#/definitions/res.Response"
-            }
-          },
-          "400": {
-            "description": "参数错误",
-            "schema": {
-              "$ref": "#/definitions/res.Response"
-            }
-          },
-          "500": {
-            "description": "系统异常",
-            "schema": {
-              "$ref": "#/definitions/res.Response"
-            }
-          }
-        }
-      }
-    },
-    "/gateway/user/v1/update/password": {
-      "post": {
-        "security": [
-          {
-            "Bearer": []
-          }
-        ],
-        "description": "修改密码",
-        "consumes": [
-          "application/json"
-        ],
-        "produces": [
-          "application/json"
-        ],
-        "tags": [
-          "用户模块"
-        ],
-        "summary": "修改密码",
-        "parameters": [
-          {
-            "description": "修改密码信息",
-            "name": "data",
-            "in": "body",
-            "required": true,
-            "schema": {
-              "$ref": "#/definitions/dto.UpdatePasswordReq"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "修改成功",
-            "schema": {
-              "$ref": "#/definitions/res.Response"
-            }
-          }
-        }
-      }
-    },
-    "/gateway/user/v1/update/phone": {
-      "post": {
-        "security": [
-          {
-            "Bearer": []
-          }
-        ],
-        "description": "修改手机号",
-        "consumes": [
-          "application/json"
-        ],
-        "produces": [
-          "application/json"
-        ],
-        "tags": [
-          "用户模块"
-        ],
-        "summary": "修改手机号",
-        "parameters": [
-          {
-            "description": "修改手机号信息",
-            "name": "data",
-            "in": "body",
-            "required": true,
-            "schema": {
-              "$ref": "#/definitions/dto.UpdatePhoneReq"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "修改成功",
-            "schema": {
-              "$ref": "#/definitions/res.Response"
-            }
-          }
-        }
-      }
-    },
-    "/gateway/user/v1/update/profile": {
-      "post": {
-        "security": [
-          {
-            "Bearer": []
-          }
-        ],
-        "description": "修改：昵称、头像、签名、背景图片、邮箱",
-        "consumes": [
-          "application/json"
-        ],
-        "produces": [
-          "application/json"
-        ],
-        "tags": [
-          "用户模块"
-        ],
-        "summary": "修改个人信息",
-        "parameters": [
-          {
-            "description": "修改成功",
-            "name": "data",
-            "in": "body",
-            "required": true,
-            "schema": {
-              "$ref": "#/definitions/dto.UpdateUserProfileReq"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "修改成功",
-            "schema": {
-              "$ref": "#/definitions/res.Response"
-            }
-          }
-        }
-      }
-    },
-    "/gateway/video/feed": {
-      "get": {
-        "description": "获取推荐视频流",
-        "consumes": [
-          "application/json"
-        ],
-        "produces": [
-          "application/json"
-        ],
-        "tags": [
-          "视频模块"
-        ],
-        "summary": "获取视频流",
-        "parameters": [
-          {
-            "type": "integer",
-            "format": "int64",
-            "description": "最新时间戳（分页）",
-            "name": "latest_time",
-            "in": "query"
-          },
-          {
-            "type": "integer",
-            "default": 1,
-            "description": "页码",
-            "name": "page",
-            "in": "query"
-          },
-          {
-            "type": "integer",
-            "default": 30,
-            "description": "每页数量",
-            "name": "size",
-            "in": "query"
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "查询成功",
-            "schema": {
-              "allOf": [
-                {
-                  "$ref": "#/definitions/res.Response"
+        },
+        "dto.LikeActionReq": {
+            "type": "object",
+            "required": [
+                "action",
+                "video_id"
+            ],
+            "properties": {
+                "action": {
+                    "description": "1-点赞, 2-取消点赞",
+                    "type": "integer",
+                    "enum": [
+                        1,
+                        2
+                    ]
                 },
-                {
-                  "type": "object",
-                  "properties": {
-                    "data": {
-                      "type": "array",
-                      "items": {
-                        "$ref": "#/definitions/dto.VideoInfoRes"
-                      }
-                    }
-                  }
+                "video_id": {
+                    "type": "string",
+                    "example": "0"
                 }
-              ]
             }
-          }
-        }
-      }
-    },
-    "/gateway/video/list": {
-      "get": {
-        "description": "获取指定用户的视频列表",
-        "consumes": [
-          "application/json"
-        ],
-        "produces": [
-          "application/json"
-        ],
-        "tags": [
-          "视频模块"
-        ],
-        "summary": "获取用户视频列表",
-        "parameters": [
-          {
-            "type": "integer",
-            "format": "int64",
-            "description": "用户ID",
-            "name": "user_id",
-            "in": "query",
-            "required": true
-          },
-          {
-            "type": "integer",
-            "default": 1,
-            "description": "页码",
-            "name": "page",
-            "in": "query"
-          },
-          {
-            "type": "integer",
-            "default": 30,
-            "description": "每页数量",
-            "name": "size",
-            "in": "query"
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "查询成功",
-            "schema": {
-              "allOf": [
-                {
-                  "$ref": "#/definitions/res.Response"
+        },
+        "dto.LoginReq": {
+            "type": "object",
+            "required": [
+                "password",
+                "username"
+            ],
+            "properties": {
+                "password": {
+                    "type": "string",
+                    "minLength": 6,
+                    "example": "123456"
                 },
-                {
-                  "type": "object",
-                  "properties": {
-                    "data": {
-                      "type": "array",
-                      "items": {
-                        "$ref": "#/definitions/dto.VideoInfoRes"
-                      }
-                    }
-                  }
+                "username": {
+                    "type": "string",
+                    "example": "admin"
                 }
-              ]
             }
-          }
-        }
-      }
-    },
-    "/gateway/video/publish": {
-      "post": {
-        "security": [
-          {
-            "Bearer": []
-          }
-        ],
-        "description": "用户发布视频",
-        "consumes": [
-          "application/json"
-        ],
-        "produces": [
-          "application/json"
-        ],
-        "tags": [
-          "视频模块"
-        ],
-        "summary": "发布视频",
-        "parameters": [
-          {
-            "description": "视频信息",
-            "name": "data",
-            "in": "body",
-            "required": true,
-            "schema": {
-              "$ref": "#/definitions/dto.PublishVideoReq"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "发布成功",
-            "schema": {
-              "allOf": [
-                {
-                  "$ref": "#/definitions/res.Response"
+        },
+        "dto.MessageInfoRes": {
+            "type": "object",
+            "properties": {
+                "content": {
+                    "type": "string"
                 },
-                {
-                  "type": "object",
-                  "properties": {
-                    "data": {
-                      "$ref": "#/definitions/dto.PublishVideoResp"
-                    }
-                  }
+                "created_at": {
+                    "type": "string"
+                },
+                "from_id": {
+                    "type": "string",
+                    "example": "0"
+                },
+                "id": {
+                    "type": "string",
+                    "example": "0"
+                },
+                "is_read": {
+                    "type": "integer"
+                },
+                "msg_type": {
+                    "type": "integer"
+                },
+                "to_id": {
+                    "type": "string",
+                    "example": "0"
                 }
-              ]
             }
-          },
-          "400": {
-            "description": "参数错误",
-            "schema": {
-              "$ref": "#/definitions/res.Response"
+        },
+        "dto.RegisterReq": {
+            "type": "object",
+            "required": [
+                "password",
+                "phone",
+                "username"
+            ],
+            "properties": {
+                "email": {
+                    "description": "Email 注册时可选，但如果传了必须符合格式",
+                    "type": "string",
+                    "example": "test@example.com"
+                },
+                "password": {
+                    "type": "string",
+                    "maxLength": 32,
+                    "minLength": 6,
+                    "example": "secret123"
+                },
+                "phone": {
+                    "type": "string",
+                    "example": "18888888888"
+                },
+                "username": {
+                    "type": "string",
+                    "maxLength": 20,
+                    "minLength": 4,
+                    "example": "newuser"
+                }
             }
-          }
+        },
+        "dto.SendMessageReq": {
+            "type": "object",
+            "required": [
+                "content",
+                "to_user_id"
+            ],
+            "properties": {
+                "content": {
+                    "type": "string"
+                },
+                "msg_type": {
+                    "description": "1-文本, 2-图片",
+                    "type": "integer",
+                    "enum": [
+                        1,
+                        2
+                    ]
+                },
+                "to_user_id": {
+                    "type": "string",
+                    "example": "0"
+                }
+            }
+        },
+        "dto.UpdatePasswordReq": {
+            "type": "object",
+            "required": [
+                "newPassword",
+                "oldPassword"
+            ],
+            "properties": {
+                "newPassword": {
+                    "description": "nefield 确保新旧密码不等",
+                    "type": "string",
+                    "maxLength": 32,
+                    "minLength": 6
+                },
+                "oldPassword": {
+                    "type": "string"
+                }
+            }
+        },
+        "dto.UpdatePhoneReq": {
+            "type": "object",
+            "required": [
+                "code",
+                "newPhone"
+            ],
+            "properties": {
+                "code": {
+                    "description": "增加验证码字段，实际业务必需",
+                    "type": "string"
+                },
+                "newPhone": {
+                    "type": "string"
+                }
+            }
+        },
+        "dto.UpdateUserProfileReq": {
+            "type": "object",
+            "properties": {
+                "avatar": {
+                    "type": "string"
+                },
+                "backgroundImage": {
+                    "type": "string"
+                },
+                "email": {
+                    "type": "string"
+                },
+                "nickName": {
+                    "type": "string",
+                    "maxLength": 50
+                },
+                "signature": {
+                    "type": "string",
+                    "maxLength": 255
+                }
+            }
+        },
+        "dto.UserInfoRes": {
+            "type": "object",
+            "properties": {
+                "avatar": {
+                    "type": "string"
+                },
+                "backgroundImage": {
+                    "type": "string"
+                },
+                "email": {
+                    "type": "string"
+                },
+                "id": {
+                    "type": "string",
+                    "example": "0"
+                },
+                "nickName": {
+                    "type": "string"
+                },
+                "phone": {
+                    "type": "string"
+                },
+                "signature": {
+                    "type": "string"
+                },
+                "userName": {
+                    "type": "string"
+                }
+            }
+        },
+        "dto.UserRelationRes": {
+            "type": "object",
+            "properties": {
+                "avatar": {
+                    "type": "string"
+                },
+                "backgroundImage": {
+                    "type": "string"
+                },
+                "email": {
+                    "type": "string"
+                },
+                "id": {
+                    "type": "string",
+                    "example": "0"
+                },
+                "is_follow": {
+                    "description": "当前用户是否关注该用户",
+                    "type": "boolean"
+                },
+                "is_followed": {
+                    "description": "该用户是否关注当前用户",
+                    "type": "boolean"
+                },
+                "is_mutual_follow": {
+                    "description": "是否互关",
+                    "type": "boolean"
+                },
+                "nickName": {
+                    "type": "string"
+                },
+                "phone": {
+                    "type": "string"
+                },
+                "signature": {
+                    "type": "string"
+                },
+                "userName": {
+                    "type": "string"
+                }
+            }
+        },
+        "dto.VideoInfoRes": {
+            "type": "object",
+            "properties": {
+                "author": {
+                    "description": "作者信息",
+                    "allOf": [
+                        {
+                            "$ref": "#/definitions/dto.UserInfoRes"
+                        }
+                    ]
+                },
+                "commentCount": {
+                    "type": "integer"
+                },
+                "coverUrl": {
+                    "type": "string"
+                },
+                "description": {
+                    "type": "string"
+                },
+                "duration": {
+                    "type": "number"
+                },
+                "favoriteCount": {
+                    "type": "integer"
+                },
+                "height": {
+                    "type": "integer"
+                },
+                "id": {
+                    "type": "string",
+                    "example": "0"
+                },
+                "isFavorite": {
+                    "description": "当前用户是否点赞",
+                    "type": "boolean"
+                },
+                "playUrl": {
+                    "type": "string"
+                },
+                "publishTime": {
+                    "type": "string"
+                },
+                "title": {
+                    "type": "string"
+                },
+                "userId": {
+                    "type": "string",
+                    "example": "0"
+                },
+                "viewCount": {
+                    "type": "integer"
+                },
+                "width": {
+                    "type": "integer"
+                }
+            }
+        },
+        "res.Response": {
+            "type": "object",
+            "properties": {
+                "code": {
+                    "type": "integer"
+                },
+                "data": {},
+                "msg": {
+                    "type": "string"
+                }
+            }
         }
-      }
     }
-  },
-  "definitions": {
-    "dto.ChatSessionRes": {
-      "type": "object",
-      "properties": {
-        "id": {
-          "type": "string",
-          "example": "0"
-        },
-        "last_message": {
-          "type": "string"
-        },
-        "peer_id": {
-          "type": "string",
-          "example": "0"
-        },
-        "peer_user": {
-          "description": "对方用户信息",
-          "allOf": [
-            {
-              "$ref": "#/definitions/dto.UserInfoRes"
-            }
-          ]
-        },
-        "unread_count": {
-          "type": "integer"
-        },
-        "updated_at": {
-          "type": "string"
-        }
-      }
-    },
-    "dto.CommentActionReq": {
-      "type": "object",
-      "required": [
-        "action",
-        "video_id"
-      ],
-      "properties": {
-        "action": {
-          "description": "1-发布评论, 2-删除评论",
-          "type": "integer",
-          "enum": [
-            1,
-            2
-          ]
-        },
-        "comment_id": {
-          "description": "删除时必填",
-          "type": "string",
-          "example": "0"
-        },
-        "content": {
-          "description": "发布时必填",
-          "type": "string"
-        },
-        "parent_id": {
-          "description": "被回复的评论ID（回复时使用）",
-          "type": "string",
-          "example": "0"
-        },
-        "root_id": {
-          "description": "顶层评论ID（回复时使用）",
-          "type": "string",
-          "example": "0"
-        },
-        "video_id": {
-          "type": "string",
-          "example": "0"
-        }
-      }
-    },
-    "dto.CommentInfoRes": {
-      "type": "object",
-      "properties": {
-        "author": {
-          "description": "评论作者信息",
-          "allOf": [
-            {
-              "$ref": "#/definitions/dto.UserInfoRes"
-            }
-          ]
-        },
-        "content": {
-          "type": "string"
-        },
-        "created_at": {
-          "type": "string"
-        },
-        "id": {
-          "type": "string",
-          "example": "0"
-        },
-        "is_liked": {
-          "description": "当前用户是否点赞该评论",
-          "type": "boolean"
-        },
-        "like_count": {
-          "type": "integer"
-        },
-        "parent_id": {
-          "type": "string",
-          "example": "0"
-        },
-        "replies": {
-          "description": "回复列表（仅顶层评论有）",
-          "type": "array",
-          "items": {
-            "$ref": "#/definitions/dto.CommentInfoRes"
-          }
-        },
-        "reply_count": {
-          "description": "回复数量（仅顶层评论有）",
-          "type": "integer"
-        },
-        "root_id": {
-          "type": "string",
-          "example": "0"
-        },
-        "user_id": {
-          "type": "string",
-          "example": "0"
-        },
-        "video_id": {
-          "type": "string",
-          "example": "0"
-        }
-      }
-    },
-    "dto.FollowActionReq": {
-      "type": "object",
-      "required": [
-        "action",
-        "to_user_id"
-      ],
-      "properties": {
-        "action": {
-          "description": "1-关注, 2-取消关注",
-          "type": "integer",
-          "enum": [
-            1,
-            2
-          ]
-        },
-        "to_user_id": {
-          "type": "string",
-          "example": "0"
-        }
-      }
-    },
-    "dto.LikeActionReq": {
-      "type": "object",
-      "required": [
-        "action",
-        "video_id"
-      ],
-      "properties": {
-        "action": {
-          "description": "1-点赞, 2-取消点赞",
-          "type": "integer",
-          "enum": [
-            1,
-            2
-          ]
-        },
-        "video_id": {
-          "type": "string",
-          "example": "0"
-        }
-      }
-    },
-    "dto.LoginReq": {
-      "type": "object",
-      "required": [
-        "password",
-        "username"
-      ],
-      "properties": {
-        "password": {
-          "type": "string",
-          "minLength": 6,
-          "example": "123456"
-        },
-        "username": {
-          "type": "string",
-          "example": "admin"
-        }
-      }
-    },
-    "dto.MessageInfoRes": {
-      "type": "object",
-      "properties": {
-        "content": {
-          "type": "string"
-        },
-        "created_at": {
-          "type": "string"
-        },
-        "from_id": {
-          "type": "string",
-          "example": "0"
-        },
-        "id": {
-          "type": "string",
-          "example": "0"
-        },
-        "is_read": {
-          "type": "integer"
-        },
-        "msg_type": {
-          "type": "integer"
-        },
-        "to_id": {
-          "type": "string",
-          "example": "0"
-        }
-      }
-    },
-    "dto.PublishVideoReq": {
-      "type": "object",
-      "required": [
-        "cover_url",
-        "play_url",
-        "title"
-      ],
-      "properties": {
-        "cover_url": {
-          "type": "string"
-        },
-        "description": {
-          "type": "string",
-          "maxLength": 1000
-        },
-        "duration": {
-          "type": "number",
-          "minimum": 0
-        },
-        "height": {
-          "type": "integer",
-          "minimum": 0
-        },
-        "play_url": {
-          "type": "string"
-        },
-        "title": {
-          "type": "string",
-          "maxLength": 255
-        },
-        "width": {
-          "type": "integer",
-          "minimum": 0
-        }
-      }
-    },
-    "dto.PublishVideoResp": {
-      "type": "object",
-      "properties": {
-        "video_id": {
-          "type": "string",
-          "example": "0"
-        }
-      }
-    },
-    "dto.RegisterReq": {
-      "type": "object",
-      "required": [
-        "password",
-        "phone",
-        "username"
-      ],
-      "properties": {
-        "email": {
-          "description": "Email 注册时可选，但如果传了必须符合格式",
-          "type": "string",
-          "example": "test@example.com"
-        },
-        "password": {
-          "type": "string",
-          "maxLength": 32,
-          "minLength": 6,
-          "example": "secret123"
-        },
-        "phone": {
-          "type": "string",
-          "example": "18888888888"
-        },
-        "username": {
-          "type": "string",
-          "maxLength": 20,
-          "minLength": 4,
-          "example": "newuser"
-        }
-      }
-    },
-    "dto.SendMessageReq": {
-      "type": "object",
-      "required": [
-        "content",
-        "to_user_id"
-      ],
-      "properties": {
-        "content": {
-          "type": "string"
-        },
-        "msg_type": {
-          "description": "1-文本, 2-图片",
-          "type": "integer",
-          "enum": [
-            1,
-            2
-          ]
-        },
-        "to_user_id": {
-          "type": "string",
-          "example": "0"
-        }
-      }
-    },
-    "dto.UpdatePasswordReq": {
-      "type": "object",
-      "required": [
-        "newPassword",
-        "oldPassword"
-      ],
-      "properties": {
-        "newPassword": {
-          "description": "nefield 确保新旧密码不等",
-          "type": "string",
-          "maxLength": 32,
-          "minLength": 6
-        },
-        "oldPassword": {
-          "type": "string"
-        }
-      }
-    },
-    "dto.UpdatePhoneReq": {
-      "type": "object",
-      "required": [
-        "code",
-        "newPhone"
-      ],
-      "properties": {
-        "code": {
-          "description": "增加验证码字段，实际业务必需",
-          "type": "string"
-        },
-        "newPhone": {
-          "type": "string"
-        }
-      }
-    },
-    "dto.UpdateUserProfileReq": {
-      "type": "object",
-      "properties": {
-        "avatar": {
-          "type": "string"
-        },
-        "backgroundImage": {
-          "type": "string"
-        },
-        "email": {
-          "type": "string"
-        },
-        "nickName": {
-          "type": "string",
-          "maxLength": 50
-        },
-        "signature": {
-          "type": "string",
-          "maxLength": 255
-        }
-      }
-    },
-    "dto.UserInfoRes": {
-      "type": "object",
-      "properties": {
-        "avatar": {
-          "type": "string"
-        },
-        "backgroundImage": {
-          "type": "string"
-        },
-        "email": {
-          "type": "string"
-        },
-        "id": {
-          "type": "string",
-          "example": "0"
-        },
-        "nickName": {
-          "type": "string"
-        },
-        "phone": {
-          "type": "string"
-        },
-        "signature": {
-          "type": "string"
-        },
-        "userName": {
-          "type": "string"
-        }
-      }
-    },
-    "dto.UserRelationRes": {
-      "type": "object",
-      "properties": {
-        "avatar": {
-          "type": "string"
-        },
-        "backgroundImage": {
-          "type": "string"
-        },
-        "email": {
-          "type": "string"
-        },
-        "id": {
-          "type": "string",
-          "example": "0"
-        },
-        "is_follow": {
-          "description": "当前用户是否关注该用户",
-          "type": "boolean"
-        },
-        "is_followed": {
-          "description": "该用户是否关注当前用户",
-          "type": "boolean"
-        },
-        "is_mutual_follow": {
-          "description": "是否互关",
-          "type": "boolean"
-        },
-        "nickName": {
-          "type": "string"
-        },
-        "phone": {
-          "type": "string"
-        },
-        "signature": {
-          "type": "string"
-        },
-        "userName": {
-          "type": "string"
-        }
-      }
-    },
-    "dto.VideoInfoRes": {
-      "type": "object",
-      "properties": {
-        "author": {
-          "description": "作者信息",
-          "allOf": [
-            {
-              "$ref": "#/definitions/dto.UserInfoRes"
-            }
-          ]
-        },
-        "comment_count": {
-          "type": "integer"
-        },
-        "cover_url": {
-          "type": "string"
-        },
-        "description": {
-          "type": "string"
-        },
-        "duration": {
-          "type": "number"
-        },
-        "favorite_count": {
-          "type": "integer"
-        },
-        "height": {
-          "type": "integer"
-        },
-        "id": {
-          "type": "string",
-          "example": "0"
-        },
-        "is_favorite": {
-          "description": "当前用户是否点赞",
-          "type": "boolean"
-        },
-        "play_url": {
-          "type": "string"
-        },
-        "publish_time": {
-          "type": "string"
-        },
-        "title": {
-          "type": "string"
-        },
-        "user_id": {
-          "type": "string",
-          "example": "0"
-        },
-        "view_count": {
-          "type": "integer"
-        },
-        "width": {
-          "type": "integer"
-        }
-      }
-    },
-    "res.Response": {
-      "type": "object",
-      "properties": {
-        "code": {
-          "type": "integer"
-        },
-        "data": {},
-        "msg": {
-          "type": "string"
-        }
-      }
-    }
-  }
 }

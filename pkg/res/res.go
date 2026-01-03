@@ -50,6 +50,11 @@ func Ok(c *gin.Context) {
 	R(xerror.SUCCESS, nil, "操作成功", c)
 }
 
+// OkMsg 携带自定义消息
+func OkMsg(msg string, c *gin.Context) {
+	R(xerror.SUCCESS, nil, msg, c)
+}
+
 // OkData 成功并携带数据
 func OkData(data interface{}, c *gin.Context) {
 	R(xerror.SUCCESS, data, "查询成功", c)

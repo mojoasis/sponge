@@ -175,7 +175,7 @@ func initDatabase(cfg *conf.AppConfig) {
 		log.New(os.Stdout, "\r\n", log.LstdFlags), // io writer
 		logger.Config{
 			SlowThreshold:             200 * time.Millisecond, // 慢 SQL 阈值：超过 200ms 则记录为慢 SQL
-			LogLevel:                  logger.Warn,            // 日志级别：Warn 级别会打印慢 SQL 和 错误
+			LogLevel:                  logger.Info,            // 日志级别：Warn 级别会打印慢 SQL 和 错误
 			IgnoreRecordNotFoundError: true,                   // 忽略 ErrRecordNotFound 错误日志
 			Colorful:                  true,                   // 彩色打印
 		},
@@ -237,16 +237,9 @@ func initOSS(cfg *conf.AppConfig) {
 		fmt.Println("OSS 客户端初始化失败")
 		return
 	}
-	global.S3Client = client
-	// 实例化视频存储封装
-	global.VideoStorage = &xoss.OSSClient{
+	// 赋值给全局封装好的 OSS 工具类
+	global.OSS = &xoss.OSSClient{
 		S3Client: client,
-		Bucket:   cfg.OSS.VideoBucket,
-	}
-	// 实例化图片存储封装
-	global.ImgStorage = &xoss.OSSClient{
-		S3Client: client,
-		Bucket:   cfg.OSS.ImgBucket,
 	}
 	fmt.Println("OSS 初始化成功")
 }

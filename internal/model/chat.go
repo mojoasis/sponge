@@ -1,6 +1,6 @@
 package model
 
-import "sponge/internal/consts"
+import "sponge/pkg/constants"
 
 // ChatSession 会话列表
 type ChatSession struct {
@@ -22,7 +22,7 @@ type ChatMessage struct {
 }
 
 func (ChatSession) TableName() string {
-	return consts.ChatSessionTableName
+	return constants.ChatSessionTableName
 }
 
-func (ChatMessage) TableName() string { return consts.ChatMessageTableName }
+func (ChatMessage) TableName() string { return constants.ChatMessageTableName }

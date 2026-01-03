@@ -1,6 +1,6 @@
 package model
 
-import "sponge/internal/consts"
+import "sponge/pkg/constants"
 
 // Like 点赞表
 type Like struct {
@@ -10,4 +10,4 @@ type Like struct {
 	Status  int8  `gorm:"default:1;comment:1-点赞, 0-取消点赞" json:"status"`
 }
 
-func (Like) TableName() string { return consts.FavoritesTableName }
+func (Like) TableName() string { return constants.FavoritesTableName }

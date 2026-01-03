@@ -87,9 +87,8 @@ func (a *LikeApi) GetLikeList(c *gin.Context) {
 		req.Size = 30
 	}
 
-	var currentUserID int64
 	if userID, exists := c.Get("userID"); exists {
-		currentUserID = userID.(int64)
+		_ = userID.(int64)
 	}
 
 	videoIDs, total, err := a.likeService.GetLikeList(c.Request.Context(), req.UserID, req.Page, req.Size)
@@ -114,7 +113,7 @@ func (a *LikeApi) GetLikeList(c *gin.Context) {
 	videoMap := make(map[int64]*dto.VideoInfoRes)
 
 	for _, videoID := range videoIDs {
-		video, err := a.videoService.GetVideoByID(c.Request.Context(), videoID, currentUserID)
+		video, err := a.videoService.GetVideoByID(c.Request.Context(), videoID)
 		if err != nil {
 			continue
 		}

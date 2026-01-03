@@ -4,9 +4,9 @@ import (
 	"context"
 	"errors"
 	"fmt"
-	"sponge/internal/consts"
 	"sponge/internal/dao"
 	"sponge/internal/model/dto"
+	"sponge/pkg/constants"
 	"time"
 
 	"sponge/internal/model"
@@ -67,7 +67,7 @@ func (s *UserService) Login(ctx context.Context, username, password string) (str
 	}
 
 	// 存入 Redis (实现单点登录或黑名单机制，同时用于自动续期)
-	redisKey := fmt.Sprintf("%s%d", consts.RedisKeyLoginToken, user.ID)
+	redisKey := fmt.Sprintf("%s%d", constants.RedisKeyLoginToken, user.ID)
 	err = global.Redis.Set(ctx, redisKey, token, 24*time.Hour)
 	if err != nil {
 		return "", 0, "", err

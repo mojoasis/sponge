@@ -1,6 +1,6 @@
 package model
 
-import "sponge/internal/consts"
+import "sponge/pkg/constants"
 
 // Comment 评论表
 type Comment struct {
@@ -13,4 +13,4 @@ type Comment struct {
 	LikeCount int    `gorm:"default:0" json:"like_count"`
 }
 
-func (Comment) TableName() string { return consts.CommentTableName }
+func (Comment) TableName() string { return constants.CommentTableName }

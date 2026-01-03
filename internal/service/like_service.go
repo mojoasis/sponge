@@ -3,9 +3,9 @@ package service
 import (
 	"context"
 	"errors"
-	"sponge/internal/consts"
 	"sponge/internal/dao"
 	"sponge/internal/model"
+	"sponge/pkg/constants"
 )
 
 type LikeService struct {
@@ -27,7 +27,7 @@ func (s *LikeService) LikeAction(ctx context.Context, userID, videoID int64, act
 		return errors.New("视频不存在")
 	}
 
-	if action == consts.FavoriteActionType { // 1-点赞
+	if action == constants.FavoriteActionType { // 1-点赞
 		// 检查是否已点赞
 		if s.likeDao.IsLiked(ctx, userID, videoID) {
 			return errors.New("已经点赞过了")
@@ -49,7 +49,7 @@ func (s *LikeService) LikeAction(ctx context.Context, userID, videoID int64, act
 			_ = s.videoDao.IncrementFavoriteCount(context.Background(), videoID)
 		}()
 
-	} else if action == consts.UnFavoriteActionType { // 2-取消点赞
+	} else if action == constants.UnFavoriteActionType { // 2-取消点赞
 		// 检查是否已点赞
 		if !s.likeDao.IsLiked(ctx, userID, videoID) {
 			return errors.New("未点赞该视频")

@@ -1,6 +1,7 @@
 package v1
 
 import (
+	"fmt"
 	"sponge/internal/model"
 	"sponge/internal/model/dto"
 	"sponge/internal/service"
@@ -27,45 +28,45 @@ func NewVideoApi(videoService *service.VideoService, userService *service.UserSe
 	}
 }
 
-// PublishVideo 发布视频
-// @Summary      发布视频
-// @Description  用户发布视频
-// @Tags         视频模块
-// @Security     Bearer
-// @Accept       json
-// @Produce      json
-// @Param        data  body      dto.PublishVideoReq  true  "视频信息"
-// @Success      200   {object}  res.Response{data=dto.PublishVideoResp} "发布成功"
-// @Failure      400   {object}  res.Response "参数错误"
-// @Router       /gateway/video/publish [post]
+// PublishVideo 上传视频
+//
+//	@Summary      批量上传视频
+//	@Description  采用流式上传技术，在上传过程中实时完成视频抽帧。接口返回视频播放地址和封面图地址。
+//	@Tags         视频模块
+//	@Security     Bearer
+//	@Accept       multipart/form-data
+//	@Produce      json
+//
+// @Param        title        formData  string  true  "视频标题"
+// @Param        description  formData  string  false "视频描述"
+// @Param        files        formData  file    true  "视频文件(多选)"
+//
+//	@Success      200 {object} res.Response "发布成功"
+//	@Failure      400 {object} res.Response "参数校验失败"
+//	@Failure      401 {object} res.Response "登录失效"
+//	@Failure      500 {object} res.Response "服务器内部错误"
+//	@Router       /gateway/video/v1/publish [post]
 func (a *VideoApi) PublishVideo(c *gin.Context) {
-	userID, _ := c.Get("userID")
-	userIDInt64 := userID.(int64)
-
 	var req dto.PublishVideoReq
-	if err := c.ShouldBindJSON(&req); err != nil {
-		errMsg := utils.Translate(err)
-		global.Logger.Warn("参数校验失败", zap.String("reason", errMsg))
-		res.FailMsg(errMsg, c)
+	fmt.Println("req:", req)
+	if err := c.ShouldBind(&req); err != nil {
+		res.FailMsg(utils.Translate(err), c)
 		return
 	}
-
-	// 转换为 model
-	var videoModel model.Video
-	if err := utils.ToDTO(&req, &videoModel); err != nil {
-		global.Logger.Error("数据转换失败", zap.Error(err))
-		res.FailMsg("数据转换失败", c)
+	// 获取当前用户ID
+	userID := res.GetUserID(c)
+	if userID == 0 {
+		res.FailMsg("登录失效", c)
 		return
 	}
-
-	video, err := a.videoService.PublishVideo(c.Request.Context(), userIDInt64, &videoModel)
+	// 用于存储处理结果切片
+	err := a.videoService.PublishVideo(c.Request.Context(), userID, &req)
 	if err != nil {
-		global.Logger.Error("发布视频失败", zap.Error(err))
-		res.FailMsg(err.Error(), c)
 		return
 	}
 
-	res.OkData(dto.PublishVideoResp{VideoID: video.ID}, c)
+	// 返回结果
+	res.OkMsg("发布成功", c)
 }
 
 // GetVideoList 获取用户视频列表
@@ -74,11 +75,11 @@ func (a *VideoApi) PublishVideo(c *gin.Context) {
 // @Tags         视频模块
 // @Accept       json
 // @Produce      json
-// @Param        user_id  query     int64  true  "用户ID"
+// @Param        userId  query     int64  true  "用户ID"
 // @Param        page     query     int    false "页码" default(1)
 // @Param        size     query     int    false "每页数量" default(30)
 // @Success      200      {object}  res.Response{data=[]dto.VideoInfoRes} "查询成功"
-// @Router       /gateway/video/list [get]
+// @Router       /gateway/video/v1/list [get]
 func (a *VideoApi) GetVideoList(c *gin.Context) {
 	var req dto.VideoListReq
 	if err := c.ShouldBindQuery(&req); err != nil {
@@ -149,11 +150,11 @@ func (a *VideoApi) GetVideoList(c *gin.Context) {
 // @Tags         视频模块
 // @Accept       json
 // @Produce      json
-// @Param        latest_time  query     int64  false "最新时间戳（分页）"
+// @Param        latestTime  query     int64  false "最新时间戳（分页）"
 // @Param        page        query     int    false "页码" default(1)
 // @Param        size        query     int    false "每页数量" default(30)
 // @Success      200         {object}  res.Response{data=[]dto.VideoInfoRes} "查询成功"
-// @Router       /gateway/video/feed [get]
+// @Router       /gateway/video/v1/feed [get]
 func (a *VideoApi) GetVideoFeed(c *gin.Context) {
 	var req dto.VideoFeedReq
 	if err := c.ShouldBindQuery(&req); err != nil {
@@ -161,11 +162,10 @@ func (a *VideoApi) GetVideoFeed(c *gin.Context) {
 		res.FailMsg(errMsg, c)
 		return
 	}
-
+	// 分页参数
 	if req.Size <= 0 {
 		req.Size = 30
 	}
-
 	// 获取当前用户ID（如果已登录）
 	var currentUserID int64
 	if userID, exists := c.Get("userID"); exists {

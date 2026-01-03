@@ -2,7 +2,7 @@ package middleware
 
 import (
 	"fmt"
-	"sponge/internal/consts"
+	"sponge/pkg/constants"
 	"sponge/pkg/res"
 	"strings"
 	"time"
@@ -41,7 +41,7 @@ func JWTAuth() gin.HandlerFunc {
 		}
 
 		// Redis 双重校验 & 自动续期 只有 Redis 里存在的 Token 才是有效的（支持服务端强制登出）
-		redisKey := fmt.Sprintf("%s%d", consts.RedisKeyLoginToken, claims.UserID)
+		redisKey := fmt.Sprintf("%s%d", constants.RedisKeyLoginToken, claims.UserID)
 		redisToken, err := global.Redis.Get(c, redisKey)
 		if err != nil || redisToken != tokenString {
 			// Redis 中不存在，或与当前 Token 不匹配（登录已过期或失效）
