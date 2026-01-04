@@ -45,7 +45,7 @@ export interface VideoFeedItem {
   title?: string
   description?: string
   coverUrl?: string
-  videoUrl?: string
+  playUrl?: string
   author?: {
     id: string
     userName?: string

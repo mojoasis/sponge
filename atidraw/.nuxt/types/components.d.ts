@@ -17,10 +17,14 @@ interface _GlobalComponents {
   'AIDraw': typeof import("../../app/components/AIDraw.vue").default
   'AppFooter': typeof import("../../app/components/AppFooter.vue").default
   'AppHeader': typeof import("../../app/components/AppHeader.vue").default
+  'AutoPlayVideo': typeof import("../../app/components/AutoPlayVideo.vue").default
   'BottomNav': typeof import("../../app/components/BottomNav.vue").default
   'ColorPicker': typeof import("../../app/components/ColorPicker.vue").default
   'DrawPad': typeof import("../../app/components/DrawPad.vue").default
   'StrokePicker': typeof import("../../app/components/StrokePicker.vue").default
+  'FeedItem': typeof import("../../app/components/feed/FeedItem.vue").default
+  'FeedVideo': typeof import("../../app/components/feed/FeedVideo.vue").default
+  'UiVideoOverlay': typeof import("../../app/components/ui/VideoOverlay.vue").default
   'UColorModeAvatar': typeof import("../../node_modules/.pnpm/@nuxt+ui@4.3.0_65b4ad8c403ece7d05bff0a302e28c45/node_modules/@nuxt/ui/dist/runtime/components/color-mode/ColorModeAvatar.vue").default
   'UColorModeButton': typeof import("../../node_modules/.pnpm/@nuxt+ui@4.3.0_65b4ad8c403ece7d05bff0a302e28c45/node_modules/@nuxt/ui/dist/runtime/components/color-mode/ColorModeButton.vue").default
   'UColorModeImage': typeof import("../../node_modules/.pnpm/@nuxt+ui@4.3.0_65b4ad8c403ece7d05bff0a302e28c45/node_modules/@nuxt/ui/dist/runtime/components/color-mode/ColorModeImage.vue").default
@@ -171,10 +175,14 @@ interface _GlobalComponents {
   'LazyAIDraw': LazyComponent<typeof import("../../app/components/AIDraw.vue").default>
   'LazyAppFooter': LazyComponent<typeof import("../../app/components/AppFooter.vue").default>
   'LazyAppHeader': LazyComponent<typeof import("../../app/components/AppHeader.vue").default>
+  'LazyAutoPlayVideo': LazyComponent<typeof import("../../app/components/AutoPlayVideo.vue").default>
   'LazyBottomNav': LazyComponent<typeof import("../../app/components/BottomNav.vue").default>
   'LazyColorPicker': LazyComponent<typeof import("../../app/components/ColorPicker.vue").default>
   'LazyDrawPad': LazyComponent<typeof import("../../app/components/DrawPad.vue").default>
   'LazyStrokePicker': LazyComponent<typeof import("../../app/components/StrokePicker.vue").default>
+  'LazyFeedItem': LazyComponent<typeof import("../../app/components/feed/FeedItem.vue").default>
+  'LazyFeedVideo': LazyComponent<typeof import("../../app/components/feed/FeedVideo.vue").default>
+  'LazyUiVideoOverlay': LazyComponent<typeof import("../../app/components/ui/VideoOverlay.vue").default>
   'LazyUColorModeAvatar': LazyComponent<typeof import("../../node_modules/.pnpm/@nuxt+ui@4.3.0_65b4ad8c403ece7d05bff0a302e28c45/node_modules/@nuxt/ui/dist/runtime/components/color-mode/ColorModeAvatar.vue").default>
   'LazyUColorModeButton': LazyComponent<typeof import("../../node_modules/.pnpm/@nuxt+ui@4.3.0_65b4ad8c403ece7d05bff0a302e28c45/node_modules/@nuxt/ui/dist/runtime/components/color-mode/ColorModeButton.vue").default>
   'LazyUColorModeImage': LazyComponent<typeof import("../../node_modules/.pnpm/@nuxt+ui@4.3.0_65b4ad8c403ece7d05bff0a302e28c45/node_modules/@nuxt/ui/dist/runtime/components/color-mode/ColorModeImage.vue").default>

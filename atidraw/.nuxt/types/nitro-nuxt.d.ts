@@ -1,7 +1,7 @@
 
 /// <reference path="app.config.d.ts" />
 /// <reference path="runtime-config.d.ts" />
-/// <reference types="/Users/mojito/Code/atidraw/node_modules/.pnpm/@nuxt+nitro-server@4.2.2_@netlify+blobs@9.1.2_@vercel+blob@2.0.0_aws4fetch@1.0.20_db0@0_65168dea0ae291bc2b57cbe73f090854/node_modules/@nuxt/nitro-server/dist/index.mjs" />
+/// <reference types="/Users/mojito/Code/sponge/atidraw/node_modules/.pnpm/@nuxt+nitro-server@4.2.2_@netlify+blobs@9.1.2_@vercel+blob@2.0.0_aws4fetch@1.0.20_db0@0_65168dea0ae291bc2b57cbe73f090854/node_modules/@nuxt/nitro-server/dist/index.mjs" />
 /// <reference path="../hub/blob.d.ts" />
 /// <reference path="nitro-middleware.d.ts" />
 

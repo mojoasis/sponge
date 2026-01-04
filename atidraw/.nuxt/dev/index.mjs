@@ -1,47 +1,47 @@
 import process from 'node:process';globalThis._importMeta_={url:import.meta.url,env:process.env};import { tmpdir } from 'node:os';
-import { defineEventHandler, handleCacheHeaders, splitCookiesString, createEvent, fetchWithEvent, isEvent, eventHandler, setHeaders, sendRedirect, proxyRequest, getRequestHeader, setResponseHeaders, setResponseStatus, send, getRequestHeaders, setResponseHeader, appendResponseHeader, getRequestURL, getResponseHeader, removeResponseHeader, createError, getQuery as getQuery$1, readBody, getResponseStatus, getCookie, deleteCookie, setCookie, useSession, createApp, createRouter as createRouter$1, toNodeListener, lazyEventHandler, getRouterParam, readFormData, setHeader, getRequestFingerprint, getResponseStatusText } from 'file:///Users/mojito/Code/atidraw/node_modules/.pnpm/h3@1.15.4/node_modules/h3/dist/index.mjs';
+import { defineEventHandler, handleCacheHeaders, splitCookiesString, createEvent, fetchWithEvent, isEvent, eventHandler, setHeaders, sendRedirect, proxyRequest, getRequestHeader, setResponseHeaders, setResponseStatus, send, getRequestHeaders, setResponseHeader, appendResponseHeader, getRequestURL, getResponseHeader, removeResponseHeader, createError, getQuery as getQuery$1, readBody, getResponseStatus, getCookie, deleteCookie, setCookie, useSession, createApp, createRouter as createRouter$1, toNodeListener, lazyEventHandler, getRouterParam, readFormData, setHeader, getRequestFingerprint, getResponseStatusText } from 'file:///Users/mojito/Code/sponge/atidraw/node_modules/.pnpm/h3@1.15.4/node_modules/h3/dist/index.mjs';
 import { Server } from 'node:http';
 import { resolve, dirname, join } from 'node:path';
 import crypto$1 from 'node:crypto';
 import { parentPort, threadId } from 'node:worker_threads';
-import { escapeHtml } from 'file:///Users/mojito/Code/atidraw/node_modules/.pnpm/@vue+shared@3.5.26/node_modules/@vue/shared/dist/shared.cjs.js';
-import { blob, ensureBlob } from 'file:///Users/mojito/Code/atidraw/.nuxt/hub/blob.mjs';
-import { generateText } from 'file:///Users/mojito/Code/atidraw/node_modules/.pnpm/ai@5.0.115_zod@4.2.1/node_modules/ai/dist/index.mjs';
-import { parseURL, withoutBase, joinURL, getQuery, withQuery, withTrailingSlash, decodePath, withLeadingSlash, withoutTrailingSlash, joinRelativeURL } from 'file:///Users/mojito/Code/atidraw/node_modules/.pnpm/ufo@1.6.1/node_modules/ufo/dist/index.mjs';
-import defu, { defuFn, defu as defu$1 } from 'file:///Users/mojito/Code/atidraw/node_modules/.pnpm/defu@6.1.4/node_modules/defu/dist/defu.mjs';
-import { FetchError, createFetch, Headers as Headers$1 } from 'file:///Users/mojito/Code/atidraw/node_modules/.pnpm/ofetch@1.5.1/node_modules/ofetch/dist/node.mjs';
-import { snakeCase, upperFirst } from 'file:///Users/mojito/Code/atidraw/node_modules/.pnpm/scule@1.3.0/node_modules/scule/dist/index.mjs';
-import { getRandomValues } from 'file:///Users/mojito/Code/atidraw/node_modules/.pnpm/uncrypto@0.1.3/node_modules/uncrypto/dist/crypto.node.mjs';
-import { createRenderer, getRequestDependencies, getPreloadLinks, getPrefetchLinks } from 'file:///Users/mojito/Code/atidraw/node_modules/.pnpm/vue-bundle-renderer@2.2.0/node_modules/vue-bundle-renderer/dist/runtime.mjs';
-import destr, { destr as destr$1 } from 'file:///Users/mojito/Code/atidraw/node_modules/.pnpm/destr@2.0.5/node_modules/destr/dist/index.mjs';
-import { createHooks } from 'file:///Users/mojito/Code/atidraw/node_modules/.pnpm/hookable@5.5.3/node_modules/hookable/dist/index.mjs';
-import { fetchNodeRequestHandler, callNodeRequestHandler } from 'file:///Users/mojito/Code/atidraw/node_modules/.pnpm/node-mock-http@1.0.3/node_modules/node-mock-http/dist/index.mjs';
-import { createStorage, prefixStorage } from 'file:///Users/mojito/Code/atidraw/node_modules/.pnpm/unstorage@1.17.3_@netlify+blobs@9.1.2_@vercel+blob@2.0.0_aws4fetch@1.0.20_db0@0.3.4_ioredis@5.8.2/node_modules/unstorage/dist/index.mjs';
-import unstorage_47drivers_47fs from 'file:///Users/mojito/Code/atidraw/node_modules/.pnpm/unstorage@1.17.3_@netlify+blobs@9.1.2_@vercel+blob@2.0.0_aws4fetch@1.0.20_db0@0.3.4_ioredis@5.8.2/node_modules/unstorage/drivers/fs.mjs';
-import { digest, hash as hash$1 } from 'file:///Users/mojito/Code/atidraw/node_modules/.pnpm/ohash@2.0.11/node_modules/ohash/dist/index.mjs';
-import { klona } from 'file:///Users/mojito/Code/atidraw/node_modules/.pnpm/klona@2.0.6/node_modules/klona/dist/index.mjs';
+import { escapeHtml } from 'file:///Users/mojito/Code/sponge/atidraw/node_modules/.pnpm/@vue+shared@3.5.26/node_modules/@vue/shared/dist/shared.cjs.js';
+import { blob, ensureBlob } from 'file:///Users/mojito/Code/sponge/atidraw/.nuxt/hub/blob.mjs';
+import { generateText } from 'file:///Users/mojito/Code/sponge/atidraw/node_modules/.pnpm/ai@5.0.115_zod@4.2.1/node_modules/ai/dist/index.mjs';
+import { parseURL, withoutBase, joinURL, getQuery, withQuery, withTrailingSlash, decodePath, withLeadingSlash, withoutTrailingSlash, joinRelativeURL } from 'file:///Users/mojito/Code/sponge/atidraw/node_modules/.pnpm/ufo@1.6.1/node_modules/ufo/dist/index.mjs';
+import defu, { defuFn, defu as defu$1 } from 'file:///Users/mojito/Code/sponge/atidraw/node_modules/.pnpm/defu@6.1.4/node_modules/defu/dist/defu.mjs';
+import { FetchError, createFetch, Headers as Headers$1 } from 'file:///Users/mojito/Code/sponge/atidraw/node_modules/.pnpm/ofetch@1.5.1/node_modules/ofetch/dist/node.mjs';
+import { snakeCase, upperFirst } from 'file:///Users/mojito/Code/sponge/atidraw/node_modules/.pnpm/scule@1.3.0/node_modules/scule/dist/index.mjs';
+import { getRandomValues } from 'file:///Users/mojito/Code/sponge/atidraw/node_modules/.pnpm/uncrypto@0.1.3/node_modules/uncrypto/dist/crypto.node.mjs';
+import { createRenderer, getRequestDependencies, getPreloadLinks, getPrefetchLinks } from 'file:///Users/mojito/Code/sponge/atidraw/node_modules/.pnpm/vue-bundle-renderer@2.2.0/node_modules/vue-bundle-renderer/dist/runtime.mjs';
+import destr, { destr as destr$1 } from 'file:///Users/mojito/Code/sponge/atidraw/node_modules/.pnpm/destr@2.0.5/node_modules/destr/dist/index.mjs';
+import { createHooks } from 'file:///Users/mojito/Code/sponge/atidraw/node_modules/.pnpm/hookable@5.5.3/node_modules/hookable/dist/index.mjs';
+import { fetchNodeRequestHandler, callNodeRequestHandler } from 'file:///Users/mojito/Code/sponge/atidraw/node_modules/.pnpm/node-mock-http@1.0.3/node_modules/node-mock-http/dist/index.mjs';
+import { createStorage, prefixStorage } from 'file:///Users/mojito/Code/sponge/atidraw/node_modules/.pnpm/unstorage@1.17.3_@netlify+blobs@9.1.2_@vercel+blob@2.0.0_aws4fetch@1.0.20_db0@0.3.4_ioredis@5.8.2/node_modules/unstorage/dist/index.mjs';
+import unstorage_47drivers_47fs from 'file:///Users/mojito/Code/sponge/atidraw/node_modules/.pnpm/unstorage@1.17.3_@netlify+blobs@9.1.2_@vercel+blob@2.0.0_aws4fetch@1.0.20_db0@0.3.4_ioredis@5.8.2/node_modules/unstorage/drivers/fs.mjs';
+import { digest, hash as hash$1 } from 'file:///Users/mojito/Code/sponge/atidraw/node_modules/.pnpm/ohash@2.0.11/node_modules/ohash/dist/index.mjs';
+import { klona } from 'file:///Users/mojito/Code/sponge/atidraw/node_modules/.pnpm/klona@2.0.6/node_modules/klona/dist/index.mjs';
 import { AsyncLocalStorage } from 'node:async_hooks';
-import { getContext } from 'file:///Users/mojito/Code/atidraw/node_modules/.pnpm/unctx@2.4.1/node_modules/unctx/dist/index.mjs';
-import { toRouteMatcher, createRouter } from 'file:///Users/mojito/Code/atidraw/node_modules/.pnpm/radix3@1.1.2/node_modules/radix3/dist/index.mjs';
+import { getContext } from 'file:///Users/mojito/Code/sponge/atidraw/node_modules/.pnpm/unctx@2.4.1/node_modules/unctx/dist/index.mjs';
+import { toRouteMatcher, createRouter } from 'file:///Users/mojito/Code/sponge/atidraw/node_modules/.pnpm/radix3@1.1.2/node_modules/radix3/dist/index.mjs';
 import { readFile } from 'node:fs/promises';
-import consola, { consola as consola$1 } from 'file:///Users/mojito/Code/atidraw/node_modules/.pnpm/consola@3.4.2/node_modules/consola/dist/index.mjs';
-import { ErrorParser } from 'file:///Users/mojito/Code/atidraw/node_modules/.pnpm/youch-core@0.3.3/node_modules/youch-core/build/index.js';
-import { Youch } from 'file:///Users/mojito/Code/atidraw/node_modules/.pnpm/youch@4.1.0-beta.11/node_modules/youch/build/index.js';
-import { SourceMapConsumer } from 'file:///Users/mojito/Code/atidraw/node_modules/.pnpm/source-map@0.7.6/node_modules/source-map/source-map.js';
-import { stringify, uneval } from 'file:///Users/mojito/Code/atidraw/node_modules/.pnpm/devalue@5.6.1/node_modules/devalue/index.js';
-import { captureRawStackTrace, parseRawStackTrace } from 'file:///Users/mojito/Code/atidraw/node_modules/.pnpm/errx@0.1.0/node_modules/errx/dist/index.js';
-import { isVNode, toValue, isRef } from 'file:///Users/mojito/Code/atidraw/node_modules/.pnpm/vue@3.5.26_typescript@5.8.3/node_modules/vue/index.mjs';
+import consola, { consola as consola$1 } from 'file:///Users/mojito/Code/sponge/atidraw/node_modules/.pnpm/consola@3.4.2/node_modules/consola/dist/index.mjs';
+import { ErrorParser } from 'file:///Users/mojito/Code/sponge/atidraw/node_modules/.pnpm/youch-core@0.3.3/node_modules/youch-core/build/index.js';
+import { Youch } from 'file:///Users/mojito/Code/sponge/atidraw/node_modules/.pnpm/youch@4.1.0-beta.11/node_modules/youch/build/index.js';
+import { SourceMapConsumer } from 'file:///Users/mojito/Code/sponge/atidraw/node_modules/.pnpm/source-map@0.7.6/node_modules/source-map/source-map.js';
+import { stringify, uneval } from 'file:///Users/mojito/Code/sponge/atidraw/node_modules/.pnpm/devalue@5.6.1/node_modules/devalue/index.js';
+import { captureRawStackTrace, parseRawStackTrace } from 'file:///Users/mojito/Code/sponge/atidraw/node_modules/.pnpm/errx@0.1.0/node_modules/errx/dist/index.js';
+import { isVNode, toValue, isRef } from 'file:///Users/mojito/Code/sponge/atidraw/node_modules/.pnpm/vue@3.5.26_typescript@5.8.3/node_modules/vue/index.mjs';
 import { promises } from 'node:fs';
 import { fileURLToPath } from 'node:url';
-import { dirname as dirname$1, resolve as resolve$1, basename } from 'file:///Users/mojito/Code/atidraw/node_modules/.pnpm/pathe@2.0.3/node_modules/pathe/dist/index.mjs';
-import { createHead as createHead$1, propsToString, renderSSRHead } from 'file:///Users/mojito/Code/atidraw/node_modules/.pnpm/unhead@2.0.19/node_modules/unhead/dist/server.mjs';
+import { dirname as dirname$1, resolve as resolve$1, basename } from 'file:///Users/mojito/Code/sponge/atidraw/node_modules/.pnpm/pathe@2.0.3/node_modules/pathe/dist/index.mjs';
+import { createHead as createHead$1, propsToString, renderSSRHead } from 'file:///Users/mojito/Code/sponge/atidraw/node_modules/.pnpm/unhead@2.0.19/node_modules/unhead/dist/server.mjs';
 import process$1 from 'node:process';
-import { renderToString } from 'file:///Users/mojito/Code/atidraw/node_modules/.pnpm/vue@3.5.26_typescript@5.8.3/node_modules/vue/server-renderer/index.mjs';
-import { walkResolver } from 'file:///Users/mojito/Code/atidraw/node_modules/.pnpm/unhead@2.0.19/node_modules/unhead/dist/utils.mjs';
-import { getIcons } from 'file:///Users/mojito/Code/atidraw/node_modules/.pnpm/@iconify+utils@3.1.0/node_modules/@iconify/utils/lib/index.js';
-import { collections } from 'file:///Users/mojito/Code/atidraw/.nuxt/nuxt-icon-server-bundle.mjs';
+import { renderToString } from 'file:///Users/mojito/Code/sponge/atidraw/node_modules/.pnpm/vue@3.5.26_typescript@5.8.3/node_modules/vue/server-renderer/index.mjs';
+import { walkResolver } from 'file:///Users/mojito/Code/sponge/atidraw/node_modules/.pnpm/unhead@2.0.19/node_modules/unhead/dist/utils.mjs';
+import { getIcons } from 'file:///Users/mojito/Code/sponge/atidraw/node_modules/.pnpm/@iconify+utils@3.1.0/node_modules/@iconify/utils/lib/index.js';
+import { collections } from 'file:///Users/mojito/Code/sponge/atidraw/.nuxt/nuxt-icon-server-bundle.mjs';
 
-const serverAssets = [{"baseName":"server","dir":"/Users/mojito/Code/atidraw/server/assets"}];
+const serverAssets = [{"baseName":"server","dir":"/Users/mojito/Code/sponge/atidraw/server/assets"}];
 
 const assets$1 = createStorage();
 
@@ -53,11 +53,11 @@ const storage = createStorage({});
 
 storage.mount('/assets', assets$1);
 
-storage.mount('root', unstorage_47drivers_47fs({"driver":"fs","readOnly":true,"base":"/Users/mojito/Code/atidraw","watchOptions":{"ignored":[null]}}));
-storage.mount('src', unstorage_47drivers_47fs({"driver":"fs","readOnly":true,"base":"/Users/mojito/Code/atidraw/server","watchOptions":{"ignored":[null]}}));
-storage.mount('build', unstorage_47drivers_47fs({"driver":"fs","readOnly":false,"base":"/Users/mojito/Code/atidraw/.nuxt"}));
-storage.mount('cache', unstorage_47drivers_47fs({"driver":"fs","readOnly":false,"base":"/Users/mojito/Code/atidraw/.nuxt/cache"}));
-storage.mount('data', unstorage_47drivers_47fs({"driver":"fs","base":"/Users/mojito/Code/atidraw/.data/kv"}));
+storage.mount('root', unstorage_47drivers_47fs({"driver":"fs","readOnly":true,"base":"/Users/mojito/Code/sponge/atidraw","watchOptions":{"ignored":[null]}}));
+storage.mount('src', unstorage_47drivers_47fs({"driver":"fs","readOnly":true,"base":"/Users/mojito/Code/sponge/atidraw/server","watchOptions":{"ignored":[null]}}));
+storage.mount('build', unstorage_47drivers_47fs({"driver":"fs","readOnly":false,"base":"/Users/mojito/Code/sponge/atidraw/.nuxt"}));
+storage.mount('cache', unstorage_47drivers_47fs({"driver":"fs","readOnly":false,"base":"/Users/mojito/Code/sponge/atidraw/.nuxt/cache"}));
+storage.mount('data', unstorage_47drivers_47fs({"driver":"fs","base":"/Users/mojito/Code/sponge/atidraw/.data/kv"}));
 
 function useStorage(base = "") {
   return base ? prefixStorage(storage, base) : storage;
@@ -926,11 +926,11 @@ const _inlineRuntimeConfig = {
     }
   },
   "hub": {
-    "dir": "/Users/mojito/Code/atidraw/.data",
+    "dir": "/Users/mojito/Code/sponge/atidraw/.data",
     "hosting": "",
     "blob": {
       "driver": "fs",
-      "dir": "/Users/mojito/Code/atidraw/.data/blob"
+      "dir": "/Users/mojito/Code/sponge/atidraw/.data/blob"
     },
     "cache": false,
     "db": false,
@@ -1947,13 +1947,13 @@ if (!window.__NUXT_DEVTOOLS_TIME_METRIC__) {
 window.__NUXT_DEVTOOLS_TIME_METRIC__.appInit = Date.now()
 `;
 
-const _M9LpJilVcXk4b68dL_9V7Z_ArqaAQT4CmgEVKkd44 = (function(nitro) {
+const _BiEflXDSycj64TeV8GY99lU4Jvy58l_1qDN60A46Kg4 = (function(nitro) {
   nitro.hooks.hook("render:html", (htmlContext) => {
     htmlContext.head.push(`<script>${script$1}<\/script>`);
   });
 });
 
-const _IEVUMSdw9VzX0U84AT2_ckN8utdQLwtiTxlb4ORvNk = defineNitroPlugin((nitroApp) => {
+const _8Qh2nVOlCmPSLP5EBBV0d5Xb2X1yDx_8IjlHxt6BSc = defineNitroPlugin((nitroApp) => {
   if (process.env.NUXT_OAUTH_FACEBOOK_CLIENT_ID && process.env.NUXT_OAUTH_FACEBOOK_CLIENT_SECRET || process.env.NUXT_OAUTH_INSTAGRAM_CLIENT_ID && process.env.NUXT_OAUTH_INSTAGRAM_CLIENT_SECRET) {
     nitroApp.hooks.hook("render:html", (html) => {
       html.head.unshift(`
@@ -1969,7 +1969,7 @@ const _IEVUMSdw9VzX0U84AT2_ckN8utdQLwtiTxlb4ORvNk = defineNitroPlugin((nitroApp)
   }
 });
 
-const rootDir = "/Users/mojito/Code/atidraw";
+const rootDir = "/Users/mojito/Code/sponge/atidraw";
 
 const appHead = {"meta":[{"name":"viewport","content":"width=device-width, initial-scale=1"},{"charset":"utf-8"}],"link":[],"style":[],"script":[],"noscript":[]};
 
@@ -1992,7 +1992,7 @@ const devReducers = {
   URL: (data) => data instanceof URL ? data.toString() : void 0
 };
 const asyncContext = getContext("nuxt-dev", { asyncContext: true, AsyncLocalStorage });
-const _ey9lThnP1vZr5FjKo9yU9M7oOsdOeHJ7C072wCMjFs = (nitroApp) => {
+const _3a77DQvsmmTzPZMoecwZAeAMBlOMbugTOkDujgW1P6c = (nitroApp) => {
   const handler = nitroApp.h3App.handler;
   nitroApp.h3App.handler = (event) => {
     return asyncContext.callAsync({ logs: [], event }, () => handler(event));
@@ -2063,17 +2063,17 @@ function onConsoleLog(callback) {
 
 const script = "\"use strict\";(()=>{const t=window,e=document.documentElement,c=[\"dark\",\"light\"],n=getStorageValue(\"localStorage\",\"nuxt-color-mode\")||\"system\";let i=n===\"system\"?u():n;const r=e.getAttribute(\"data-color-mode-forced\");r&&(i=r),l(i),t[\"__NUXT_COLOR_MODE__\"]={preference:n,value:i,getColorScheme:u,addColorScheme:l,removeColorScheme:d};function l(o){const s=\"\"+o+\"\",a=\"\";e.classList?e.classList.add(s):e.className+=\" \"+s,a&&e.setAttribute(\"data-\"+a,o)}function d(o){const s=\"\"+o+\"\",a=\"\";e.classList?e.classList.remove(s):e.className=e.className.replace(new RegExp(s,\"g\"),\"\"),a&&e.removeAttribute(\"data-\"+a)}function f(o){return t.matchMedia(\"(prefers-color-scheme\"+o+\")\")}function u(){if(t.matchMedia&&f(\"\").media!==\"not all\"){for(const o of c)if(f(\":\"+o).matches)return o}return\"light\"}})();function getStorageValue(t,e){switch(t){case\"localStorage\":return window.localStorage.getItem(e);case\"sessionStorage\":return window.sessionStorage.getItem(e);case\"cookie\":return getCookie(e);default:return null}}function getCookie(t){const c=(\"; \"+window.document.cookie).split(\"; \"+t+\"=\");if(c.length===2)return c.pop()?.split(\";\").shift()}";
 
-const _RbtKAPooiysDsS8NUC0wAbU9iCWIK6cnaYS4JWN9Sp8 = (function(nitro) {
+const _x2qEwJFrNSiF10q8BjXrW8Ii3RlzGS6E4sgxPxd8mSQ = (function(nitro) {
   nitro.hooks.hook("render:html", (htmlContext) => {
     htmlContext.head.push(`<script>${script}<\/script>`);
   });
 });
 
 const plugins = [
-  _M9LpJilVcXk4b68dL_9V7Z_ArqaAQT4CmgEVKkd44,
-_IEVUMSdw9VzX0U84AT2_ckN8utdQLwtiTxlb4ORvNk,
-_ey9lThnP1vZr5FjKo9yU9M7oOsdOeHJ7C072wCMjFs,
-_RbtKAPooiysDsS8NUC0wAbU9iCWIK6cnaYS4JWN9Sp8
+  _BiEflXDSycj64TeV8GY99lU4Jvy58l_1qDN60A46Kg4,
+_8Qh2nVOlCmPSLP5EBBV0d5Xb2X1yDx_8IjlHxt6BSc,
+_3a77DQvsmmTzPZMoecwZAeAMBlOMbugTOkDujgW1P6c,
+_x2qEwJFrNSiF10q8BjXrW8Ii3RlzGS6E4sgxPxd8mSQ
 ];
 
 const assets = {};
@@ -2101,7 +2101,7 @@ function getAsset (id) {
 
 const METHODS = /* @__PURE__ */ new Set(["HEAD", "GET"]);
 const EncodingMap = { gzip: ".gz", br: ".br" };
-const _yyFlzC = eventHandler((event) => {
+const _Ltk2cC = eventHandler((event) => {
   if (event.method && !METHODS.has(event.method)) {
     return;
   }
@@ -2237,8 +2237,8 @@ function publicAssetsURL(...path) {
 
 const APP_ROOT_OPEN_TAG = `<${appRootTag}${propsToString(appRootAttrs)}>`;
 const APP_ROOT_CLOSE_TAG = `</${appRootTag}>`;
-const getServerEntry = () => import('file:///Users/mojito/Code/atidraw/.nuxt//dist/server/server.mjs').then((r) => r.default || r);
-const getClientManifest = () => import('file:///Users/mojito/Code/atidraw/.nuxt//dist/server/client.manifest.mjs').then((r) => r.default || r).then((r) => typeof r === "function" ? r() : r);
+const getServerEntry = () => import('file:///Users/mojito/Code/sponge/atidraw/.nuxt//dist/server/server.mjs').then((r) => r.default || r);
+const getClientManifest = () => import('file:///Users/mojito/Code/sponge/atidraw/.nuxt//dist/server/client.manifest.mjs').then((r) => r.default || r).then((r) => typeof r === "function" ? r() : r);
 const getSSRRenderer = lazyCachedFunction(async () => {
   const createSSRApp = await getServerEntry();
   if (!createSSRApp) {
@@ -2899,7 +2899,7 @@ async function apiRequest(event, url, options = {}) {
 
 const warnOnceSet = /* @__PURE__ */ new Set();
 const DEFAULT_ENDPOINT = "https://api.iconify.design";
-const _4PhbgL = defineCachedEventHandler(async (event) => {
+const _ai4ocw = defineCachedEventHandler(async (event) => {
   const url = getRequestURL(event);
   if (!url)
     return createError({ status: 400, message: "Invalid icon request" });
@@ -2957,12 +2957,12 @@ const _4PhbgL = defineCachedEventHandler(async (event) => {
   // 1 week
 });
 
-const _BrR7TB = eventHandler(async (event) => {
+const _VRdVa7 = eventHandler(async (event) => {
   await clearUserSession(event);
   return { loggedOut: true };
 });
 
-const _iCqWxD = eventHandler(async (event) => {
+const _yKgCwt = eventHandler(async (event) => {
   const session = await getUserSession(event);
   if (Object.keys(session).length > 0) {
     await sessionHooks.callHookParallel("fetch", session, event);
@@ -2971,36 +2971,36 @@ const _iCqWxD = eventHandler(async (event) => {
   return data;
 });
 
-const _lazy_dsk5t0 = () => Promise.resolve().then(function () { return login_post$1; });
-const _lazy_aoZZPm = () => Promise.resolve().then(function () { return register_post$1; });
-const _lazy_joMom8 = () => Promise.resolve().then(function () { return drawings_get$1; });
-const _lazy_KxhBLh = () => Promise.resolve().then(function () { return feed_get$1; });
-const _lazy_2dPegD = () => Promise.resolve().then(function () { return generate_post$1; });
-const _lazy_Gd5fFn = () => Promise.resolve().then(function () { return upload_post$1; });
-const _lazy_JX8oIJ = () => Promise.resolve().then(function () { return anonymous_get$1; });
-const _lazy_U1ZcoZ = () => Promise.resolve().then(function () { return github_get$1; });
-const _lazy_JLw3dF = () => Promise.resolve().then(function () { return google_get$1; });
-const _lazy_b6MkJD = () => Promise.resolve().then(function () { return ____pathname__get$1; });
-const _lazy_nonZvk = () => Promise.resolve().then(function () { return renderer$1; });
+const _lazy_OaPwRK = () => Promise.resolve().then(function () { return login_post$1; });
+const _lazy_cU8ibK = () => Promise.resolve().then(function () { return register_post$1; });
+const _lazy_ydU21O = () => Promise.resolve().then(function () { return drawings_get$1; });
+const _lazy_9Z1e1v = () => Promise.resolve().then(function () { return feed_get$1; });
+const _lazy_eHMDGh = () => Promise.resolve().then(function () { return generate_post$1; });
+const _lazy_pAF66v = () => Promise.resolve().then(function () { return upload_post$1; });
+const _lazy_8ztY3t = () => Promise.resolve().then(function () { return anonymous_get$1; });
+const _lazy_9gmJWa = () => Promise.resolve().then(function () { return github_get$1; });
+const _lazy_XDSwrO = () => Promise.resolve().then(function () { return google_get$1; });
+const _lazy_OHKZiw = () => Promise.resolve().then(function () { return ____pathname__get$1; });
+const _lazy_VyMrMG = () => Promise.resolve().then(function () { return renderer$1; });
 
 const handlers = [
-  { route: '', handler: _yyFlzC, lazy: false, middleware: true, method: undefined },
-  { route: '/api/auth/login', handler: _lazy_dsk5t0, lazy: true, middleware: false, method: "post" },
-  { route: '/api/auth/register', handler: _lazy_aoZZPm, lazy: true, middleware: false, method: "post" },
-  { route: '/api/drawings', handler: _lazy_joMom8, lazy: true, middleware: false, method: "get" },
-  { route: '/api/feed', handler: _lazy_KxhBLh, lazy: true, middleware: false, method: "get" },
-  { route: '/api/generate', handler: _lazy_2dPegD, lazy: true, middleware: false, method: "post" },
-  { route: '/api/upload', handler: _lazy_Gd5fFn, lazy: true, middleware: false, method: "post" },
-  { route: '/auth/anonymous', handler: _lazy_JX8oIJ, lazy: true, middleware: false, method: "get" },
-  { route: '/auth/github', handler: _lazy_U1ZcoZ, lazy: true, middleware: false, method: "get" },
-  { route: '/auth/google', handler: _lazy_JLw3dF, lazy: true, middleware: false, method: "get" },
-  { route: '/drawings/**:pathname', handler: _lazy_b6MkJD, lazy: true, middleware: false, method: "get" },
-  { route: '/__nuxt_error', handler: _lazy_nonZvk, lazy: true, middleware: false, method: undefined },
+  { route: '', handler: _Ltk2cC, lazy: false, middleware: true, method: undefined },
+  { route: '/api/auth/login', handler: _lazy_OaPwRK, lazy: true, middleware: false, method: "post" },
+  { route: '/api/auth/register', handler: _lazy_cU8ibK, lazy: true, middleware: false, method: "post" },
+  { route: '/api/drawings', handler: _lazy_ydU21O, lazy: true, middleware: false, method: "get" },
+  { route: '/api/feed', handler: _lazy_9Z1e1v, lazy: true, middleware: false, method: "get" },
+  { route: '/api/generate', handler: _lazy_eHMDGh, lazy: true, middleware: false, method: "post" },
+  { route: '/api/upload', handler: _lazy_pAF66v, lazy: true, middleware: false, method: "post" },
+  { route: '/auth/anonymous', handler: _lazy_8ztY3t, lazy: true, middleware: false, method: "get" },
+  { route: '/auth/github', handler: _lazy_9gmJWa, lazy: true, middleware: false, method: "get" },
+  { route: '/auth/google', handler: _lazy_XDSwrO, lazy: true, middleware: false, method: "get" },
+  { route: '/drawings/**:pathname', handler: _lazy_OHKZiw, lazy: true, middleware: false, method: "get" },
+  { route: '/__nuxt_error', handler: _lazy_VyMrMG, lazy: true, middleware: false, method: undefined },
   { route: '/__nuxt_island/**', handler: _SxA8c9, lazy: false, middleware: false, method: undefined },
-  { route: '/api/_nuxt_icon/:collection', handler: _4PhbgL, lazy: false, middleware: false, method: undefined },
-  { route: '/api/_auth/session', handler: _BrR7TB, lazy: false, middleware: false, method: "delete" },
-  { route: '/api/_auth/session', handler: _iCqWxD, lazy: false, middleware: false, method: "get" },
-  { route: '/**', handler: _lazy_nonZvk, lazy: true, middleware: false, method: undefined }
+  { route: '/api/_nuxt_icon/:collection', handler: _ai4ocw, lazy: false, middleware: false, method: undefined },
+  { route: '/api/_auth/session', handler: _VRdVa7, lazy: false, middleware: false, method: "delete" },
+  { route: '/api/_auth/session', handler: _yKgCwt, lazy: false, middleware: false, method: "get" },
+  { route: '/**', handler: _lazy_VyMrMG, lazy: true, middleware: false, method: undefined }
 ];
 
 function createNitroApp() {
