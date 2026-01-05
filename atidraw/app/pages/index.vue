@@ -3,25 +3,19 @@ import { ref, onMounted, onBeforeUnmount, nextTick } from 'vue'
 import { useRuntimeConfig } from '#app'
 import type { ApiResponse, FeedResponseData, VideoFeedItem } from '#shared/types/api'
 
-/* ---------------- 基础配置 ---------------- */
-
 const config = useRuntimeConfig()
 const ossBaseUrl = (config.public.ossUrl as string) || ''
 
-function getOssUrl(path?: string | null) {
+function getOssUrl(path: string): string {
   if (!path) return ''
   if (/^https?:\/\//i.test(path)) return path
   return `${ossBaseUrl.replace(/\/$/, '')}/${path.replace(/^\//, '')}`
 }
 
-/* ---------------- Feed 状态 ---------------- */
-
 const feedList = ref<VideoFeedItem[]>([])
 const activeId = ref<string | number | null>(null)
 
 let observer: IntersectionObserver | null = null
-
-/* ---------------- 数据加载（首次） ---------------- */
 
 async function loadFeed() {
   const res = await $fetch<ApiResponse<FeedResponseData>>('/api/feed', {
@@ -39,10 +33,6 @@ async function loadFeed() {
   }
 }
 
-/* ---------------- IntersectionObserver ---------------- */
-/**
- * 规则：谁占据屏幕中部，谁 active
- */
 function observeItems() {
   nextTick(() => {
     observer?.disconnect()
@@ -55,9 +45,7 @@ function observeItems() {
           if (id) activeId.value = id
         })
       },
-      {
-        threshold: 0.6
-      }
+      { threshold: 0.6 }
     )
 
     document
@@ -66,44 +54,53 @@ function observeItems() {
   })
 }
 
-/* ---------------- 生命周期 ---------------- */
-
-onMounted(() => {
-  loadFeed()
-})
-
-onBeforeUnmount(() => {
-  observer?.disconnect()
-})
+onMounted(loadFeed)
+onBeforeUnmount(() => observer?.disconnect())
 </script>
 
 <template>
-  <!-- 整体容器：移动端纵向滑动 -->
-  <div
-    class="w-full h-[100svh] overflow-y-scroll snap-y snap-mandatory bg-black"
-  >
-    <!-- 单条 Feed：一屏 -->
+  <!-- 移动端统一视口容器 -->
+  <div class="video-page snap-y snap-mandatory overflow-y-scroll bg-black">
     <div
-      v-for="item in feedList"
+      v-for="(item, index) in feedList"
       :key="item.id"
-      class="feed-item w-full h-[100svh] snap-start relative"
+      class="feed-item snap-start"
       :data-id="item.id"
     >
-      <!-- 视频 -->
       <FeedItem
         :item="{
           ...item,
-          playUrl: getOssUrl(item.playUrl),
-          coverUrl: getOssUrl(item.coverUrl)
+          playUrl: getOssUrl(<string>item.playUrl),
+          coverUrl: getOssUrl(<string>item.coverUrl)
         }"
         :active="String(activeId) === String(item.id)"
+        :next-play-url="
+          feedList[index + 1]?.playUrl
+            ? getOssUrl(<string>feedList[index + 1]?.playUrl)
+            : ''
+        "
       />
     </div>
   </div>
 </template>
 
 <style scoped>
-/* 禁止横向滚动 */
+.video-page {
+  height: 100vh;
+  width: 100vw;
+  background: black;
+  //overflow: hidden;
+  overflow-y: auto;
+  overflow-x: hidden;
+  padding-top: env(safe-area-inset-top);
+  padding-bottom: env(safe-area-inset-bottom);
+}
+
+.feed-item {
+  height: 100vh;
+  width: 100vw;
+}
+
 ::-webkit-scrollbar {
   display: none;
 }

@@ -2,6 +2,8 @@
  * OSS URL处理 Composable
  * 提供统一的URL拼接功能
  */
+// @ts-ignore
+import { useRuntimeConfig } from '#imports'
 export const useOssUrl = () => {
   const config = useRuntimeConfig()
   const ossBaseUrl = config.public.ossUrl || ''
@@ -23,7 +25,7 @@ export const useOssUrl = () => {
 
     // 确保baseUrl以/结尾
     const base = ossBaseUrl.endsWith('/') ? ossBaseUrl : `${ossBaseUrl}/`
-    
+
     // 确保path不以/开头（避免双斜杠）
     const cleanPath = path.startsWith('/') ? path.slice(1) : path
 

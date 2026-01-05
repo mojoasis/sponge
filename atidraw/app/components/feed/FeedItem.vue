@@ -1,25 +1,31 @@
 <script setup lang="ts">
-import type { VideoFeedItem } from '~/shared/types/api'
-defineProps<{ item: VideoFeedItem; active: boolean }>()
+import type { VideoFeedItem } from '#shared/types/api'
+import { computed } from 'vue'
+
+const props = defineProps<{
+  item: VideoFeedItem
+  active: boolean
+  nextPlayUrl?: string
+}>()
+
+const playUrl = computed(() => props.item.playUrl || '')
+const posterUrl = computed(() => props.item.coverUrl || '')
 </script>
 
 <template>
   <div class="w-full h-[100svh] relative">
     <FeedVideo
-      :play-url="item.playUrl"
-      :poster="item.coverUrl"
+      :play-url="playUrl"
+      :poster="posterUrl"
       :active="active"
+      :preload-url="nextPlayUrl"
     />
 
-    <!-- 右侧操作区（预留） -->
-    <div class="absolute right-3 bottom-20 text-white space-y-4">
-      ❤️
-      💬
-      🔁
-    </div>
-
     <!-- 标题 -->
-    <div class="absolute left-3 bottom-6 text-white text-sm">
+    <div
+      class="absolute left-4 bottom-6 text-white z-10
+             text-sm leading-snug max-w-[80%]"
+    >
       {{ item.title }}
     </div>
   </div>

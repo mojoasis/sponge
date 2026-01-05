@@ -1,4 +1,7 @@
-import type { ApiResponse } from '~/shared/types/api'
+import {ApiResponse} from "../shared/types/api";
+import { $fetch } from "ofetch";
+// @ts-ignore
+import { useRuntimeConfig, useUserSession } from '#imports'
 
 /**
  * 客户端API请求composable

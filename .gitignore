@@ -47,3 +47,5 @@ atidraw/node_modules/
 # 日志和缓存
 *.log
 .eslintcache
+
+atidraw/.data
