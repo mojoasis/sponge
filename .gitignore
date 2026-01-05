@@ -31,6 +31,19 @@ go.work.sum
 .idea/
 .vscode/
 .DS_Store
-/tmp/
+tmp/
 
-atidraw/.data
+# IDE 配置文件
+*.swp
+
+# Nuxt 运行时文件
+atidraw/.nuxt/
+atidraw/.output/
+
+# 依赖包
+node_modules/
+atidraw/node_modules/
+
+# 日志和缓存
+*.log
+.eslintcache
