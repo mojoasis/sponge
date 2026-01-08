@@ -1,5 +1,5 @@
 // server/api/feed.get.ts
-import type { ApiResponse, FeedResponseData } from '../../shared/types/api'
+import type { FeedResponseData } from '#shared/types/api'
 import { apiRequest } from '../utils/api'
 
 export default defineEventHandler(async (event) => {
@@ -29,7 +29,7 @@ export default defineEventHandler(async (event) => {
       {
         method: 'GET',
         requireAuth: false, // 不需要认证，但如果有token会自动携带
-      }
+      },
     )
 
     // 返回统一格式的响应
@@ -38,7 +38,8 @@ export default defineEventHandler(async (event) => {
       data: res.data,
       msg: '查询成功',
     }
-  } catch (error: any) {
+  }
+  catch (error: any) {
     // 记录详细错误信息用于调试
     console.error('[Feed API Error]', {
       message: error.message,
@@ -57,4 +58,3 @@ export default defineEventHandler(async (event) => {
     })
   }
 })
-

@@ -69,4 +69,3 @@ export interface FeedResponseData {
   hasMore: boolean
   nextLatestTime?: number
 }
-

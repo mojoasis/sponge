@@ -1,4 +1,4 @@
-import type { ApiResponse } from '../../shared/types/api'
+import type { ApiResponse } from '#shared/types/api'
 
 /**
  * 统一的API请求工具函数（服务端使用）
@@ -19,7 +19,7 @@ export async function apiRequest<T = any>(
   } = {},
 ): Promise<ApiResponse<T>> {
   const config = useRuntimeConfig()
-  const apiBase = config.public.apiBase || 'http://localhost:18888'
+  const apiBase = config.public.apiBase || 'http://81.70.142.31:18888'
 
   const headers: Record<string, string> = {
     'Content-Type': 'application/json',
@@ -33,7 +33,8 @@ export async function apiRequest<T = any>(
     try {
       const session = await getUserSession(event)
       token = (session as any)?.token
-    } catch {
+    }
+    catch {
       // 如果获取session失败，忽略
     }
   }
@@ -69,10 +70,10 @@ export async function apiRequest<T = any>(
     }
 
     return response
-  } catch (error: any) {
+  }
+  catch (error: any) {
     // 处理网络错误或业务错误
     const apiError = error as any
-    
     // 保留原始状态码
     if (apiError.statusCode) {
       const err = new Error(apiError.data?.message || apiError.data?.msg || apiError.message || '请求失败') as any
@@ -80,7 +81,6 @@ export async function apiRequest<T = any>(
       err.data = apiError.data
       throw err
     }
-    
     // 处理业务错误
     if (apiError.data) {
       const err = new Error(apiError.data.message || apiError.data.msg || '请求失败') as any
@@ -88,11 +88,9 @@ export async function apiRequest<T = any>(
       err.data = apiError.data
       throw err
     }
-    
     // 其他错误
     const err = new Error(apiError.message || '网络请求失败') as any
     err.statusCode = apiError.statusCode || 500
     throw err
   }
 }
-

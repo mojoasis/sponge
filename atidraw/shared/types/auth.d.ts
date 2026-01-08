@@ -15,7 +15,7 @@ declare module '#auth-utils' {
     backgroundImage?: string
     phone?: string
   }
-  
+
   interface Session {
     user?: User
     token?: string

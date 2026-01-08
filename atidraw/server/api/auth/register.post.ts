@@ -1,5 +1,5 @@
 // server/api/auth/register.post.ts
-import type { ApiResponse, AuthResponseData, AuthRequest } from '../../../shared/types/api'
+import type { AuthResponseData, AuthRequest } from '#shared/types/api'
 import { apiRequest } from '../../utils/api'
 
 export default defineEventHandler(async (event) => {
@@ -26,7 +26,6 @@ export default defineEventHandler(async (event) => {
     const { token, user } = res.data
 
     // 设置用户会话，存储完整的用户信息和token
-    // @ts-ignore
     await setUserSession(event, {
       user: {
         provider: 'local',
@@ -52,11 +51,11 @@ export default defineEventHandler(async (event) => {
       },
       msg: '注册成功',
     }
-  } catch (error: any) {
+  }
+  catch (error: any) {
     throw createError({
       statusCode: 400,
       message: error.message || '注册失败',
     })
   }
 })
-

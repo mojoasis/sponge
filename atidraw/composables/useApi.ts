@@ -1,6 +1,5 @@
-import {ApiResponse} from "../shared/types/api";
-import { $fetch } from "ofetch";
-// @ts-ignore
+import type { ApiResponse } from '../shared/types/api'
+import { $fetch } from 'ofetch'
 import { useRuntimeConfig, useUserSession } from '#imports'
 
 /**
@@ -65,7 +64,8 @@ export const useApi = () => {
       }
 
       return response
-    } catch (error: any) {
+    }
+    catch (error: any) {
       // 处理网络错误或业务错误
       if (error.data) {
         throw new Error(error.data.message || error.data.msg || '请求失败')
@@ -78,4 +78,3 @@ export const useApi = () => {
     apiRequest,
   }
 }
-
